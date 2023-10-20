@@ -1,0 +1,314 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+body{
+    margin: 0px;
+    padding: 0px;
+    background-color: #2c6fbb;
+}
+  
+  .main-content {
+    flex-grow: 1;
+  }
+  html {
+    overflow-x: hidden;
+}
+  
+
+h1, h2, h3, h4, h5{
+    color: white;
+    font-weight: 100;
+    font-size: 300%;
+    font-family: 'Open Sans', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: 0%;
+    padding-top: 0%;
+    margin-top: 0%;
+}
+
+h2{
+    font-size: 35px;
+}
+
+p, ol, ul{
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+}
+
+label{
+    color: #133e5e;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 125%;
+}
+
+input{
+    color: #133e5e;
+    font-family: 'Open Sans', sans-serif;
+    width: 80%;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid #133e5e;
+    font-size: 125%;   
+}
+
+hr{
+    border: 1px solid #133e5e;
+}
+
+.img{
+    height: 248px;
+    width: auto;
+    margin-top: 5%;
+    margin-bottom: 2%;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;     
+}
+.header{
+    display: flex;
+    height: 80px;
+    background-color: #133e5e;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.header_schrift{
+    color: white;
+    font-size: 25px;
+    font-weight: 700;
+    font-family: 'Open Sans', sans-serif;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.background{
+    background-color: #2c6fbb;
+    height: auto;
+    margin-top: 0px;
+    height: 100%;
+}
+.seiteninhalt{
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 1%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+
+ .status_input{
+    color: white;
+    background-color: 	#104e8b;
+    font-family: 'Open Sans', sans-serif;
+    width: 400px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid #a2cffe;
+    font-size: 100%;
+    padding: 8px;
+ }
+ .status_input::placeholder {
+    color: white; 
+}
+
+.status_button{
+    background-color: #104e8b;
+    border:  3px solid #a2cffe;
+    color: white;
+    padding: 1% ;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 100%;
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 1%;
+    margin-top: 0%;
+    width: 200px;
+ }
+
+ .button_redirect{
+    background-color: #104e8b;
+    border:  3px solid #a2cffe;
+    color: white;
+    padding: 1% ;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 100%;
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 1%;
+    margin-top: 0%;
+    width: 400px;
+ }
+ .button_redirect:hover{
+    background-color: white;
+    color: #133e5e;
+ }
+
+ .status_button:hover{
+    background-color: white;
+    color: #133e5e;
+ }
+ 
+.login{
+    background-color: #2c6fbb;
+    color: white;
+    border-radius: 1%;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 1%;
+    margin-bottom: auto;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    padding-top: 1%;
+ }
+
+  .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #94b0cc;
+    color: #333;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-section {
+    text-align: left;
+    margin-left: 1%;
+}
+
+.heart-symbol {
+    color: red;
+}
+
+.footer-links {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.footer-links li {
+    display: inline;
+    margin-right: 10px;
+}
+
+.footer-links li:last-child {
+    margin-right: 0;
+}
+
+.right-section {
+    text-align: right;
+    margin-right: 1%;
+}
+
+.abstand{
+    margin-top: 3%;
+    margin-bottom: 1%;
+}
+
+.fehler{
+    font-family: 'Open Sans', sans-serif;
+    background-color: #2c6fbb;
+    border: 2px solid red;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: inline-block;
+    padding: 1%;
+    font-size: 150%;
+    font-weight: 400;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    width: 30%;
+    margin-left: 10%;
+    margin-right: 10%;
+ }
+
+@media(max-width: 750px)
+{
+
+.button_redirect
+{
+    width: 90%;
+}
+h1, h2, h3, h4, h5
+{
+    font-weight: 100;
+    font-size: 200%;
+}
+
+p, ol, ul{
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+}
+
+.header{
+    display: flex;
+    height: 40px;
+}
+
+.header_schrift{
+    color: white;
+    font-size: 15px;
+    font-weight: 400;
+
+}
+.fehler{
+    font-size: 100%;
+    font-weight: 50;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    width: 75%;
+    margin-left: 2%;
+    margin-right: 2%;
+ }
+
+ .img{
+    height: 148px;
+    width: auto;
+    margin-top: 3%;
+    margin-bottom: 0%;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;     
+}
+    
+
+
+    .status_input{
+        width: 80%;
+
+    }
+
+    .status_button{
+        width: 80%;
+    }
+    .login{
+        margin-left: 0%;
+        margin-right: 0%;
+    
+    }
+
+    .seiteninhalt{
+        margin-left: 2%;
+        margin-right: 2%;
+    }
+
+
+    input{
+        width: 100%;
+    }
+}
