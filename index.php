@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
               <h1 class="center">Login erfolgreich.</h1> <hr>
               <p>Der Nutzername für '.$CN.', um die Office365-Produkte nutzen zu können, lautet: <p> <p><b> '.$email.' </b></p>
               <p> Diese E-Mail-Adresse ist Ihre Authentification bei Microsoft, damit Ihnen über die Schule kostenlos und Datenschutzkonform Office365 
-              zu Verfügung gestellt werden kann. Ihr Passwort bei Micorosft entspricht dem, welches Sie sich auch im Schulnetzwerk gegeben habem. 
+              zu Verfügung gestellt werden kann. Ihr Passwort bei Microsoft entspricht dem, welches Sie sich auch im Schulnetzwerk gegeben habem. 
               Dieses Passwort können Sie nur im Schulnetzwerk ändern. Sollten Sie es vergessen, wenden Sie sich bitte an Ihren IT-Beauftragten. </p>
               <button class="button_redirect" onclick="window.location.href=\''.$AADLoginLink.$email.'\'";>Hier geht es direkt zu Office365.</button> <br>
               <button class="button_redirect" onclick="window.location.href=\''.$GlobalServerUrl.'\'";>Abmelden.</button>
@@ -72,6 +72,7 @@ function showLogin()
     <p> Sollten Sie Probleme beim Login haben, <br> wenden Sie sich an den IT-Beauftragten Ihrer Schule.<p>';
 }
         
-echo "</div> </div>";
+echo "</div> </div> </div>";
+
 include("footer.php");
 
