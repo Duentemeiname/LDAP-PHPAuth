@@ -1,5 +1,6 @@
 <?php
 require_once("config.php");
+require_once("functions.php");
 
 $DownLevelLogonName = "$ldapDomainName\\"; 
 $ldapNutzer = $DownLevelLogonName.$ldapNutzername;
@@ -9,13 +10,25 @@ $echoindex = array(
     "cn" => "",
     "mail" => "",
 );
+$debug = "";
+$full_debug = "";
+$testusername = "";
+$testpasswort = "";
 
 bool:$debug = $_GET["debug"];
+$authdebug = $_GET["pw"];
 $full_debug = $_GET["full"];
-if($debug == "true")
+$testusername = checkLDAPInjektion($_GET["user"]);
+$testpasswort = checkLDAPInjektion($_GET["passwort"]);
+
+if($debug == "true" && $authdebug == $PWDebug)
 {
     $debug = true;
-
+}
+else if ($authdebug != $PWDebug)
+{
+    echo "Authentifizierung für das Debug-Modul fehlgeschlagen.";
+    $debug = false;
 }
 else
 {
@@ -25,7 +38,31 @@ else
 if($debug)
 {
     echo "Angegebener Server: " .$ldapServer . ":" . $ldapPort . "<br>";
-    echo "Angegebener Nutzer: " .$ldapNutzer . "<br>";
+    echo "Angegebener Service-Nutzer: " .$ldapNutzer . "<br>";
+
+    if(!empty($testusername))
+    {
+        echo "Angegebener Test-Nutzer: $testusername. <br> ";
+
+
+
+        if(!empty($testpasswort))
+        {
+            echo "Angegebenes Passwort: $testpasswort für Test-Nutzer: $testusername. <br>";
+            connectwithUser($testusername, $testpasswort);
+        }
+        else 
+        {
+           echo "Sie haben kein Passwort angegeben, dieser Test wird einen Authentifzierungsfehler beim Nutzer zurückmelden. <br>";
+           connectwithUser($testusername, "a");
+        }
+    }
+    else
+    {
+        echo "Da Sie keinen Testnutzer ausgewählt haben, wird dieser Test mit dem Service-Nutzer ausgeführt.<br>
+        Um einen Testnutzer und das Passwort anzugeben, fügen Sie folgenden Code in die URL hinzu: <br>
+        &user=USERNAME&passwort=PASSWORT. Ersetzen Sie USERNAME und PASSWORT entsprechend.<br>";
+    }
 
     if($full_debug == true)
     {
@@ -34,6 +71,7 @@ if($debug)
         error_reporting(E_ALL);
         echo "Sie haben debug auf full gesetzt, sehen Sie jetzt keinen Fehler, gibt es keine PHP-Information zu etweigen Problemen. <br>";
     }
+    if(empty($testusername))
     connectwithUser($ldapNutzername, $ldapPasswort);
 }
 
@@ -71,19 +109,19 @@ function connectwithUser($username, $userpasswort)
 
     if ($ldapConn) 
     {
-        if($LDAPS)
-        {
-        if(!@ldap_start_tls($ldapConn))
-        {
-            if($debug)
-            {
-                echo "Fehler bei der Herstellung einer TLS Verbindung. <br>";
-                var_dump($ldapConn);
-            }
-            $echoindex["error"] = "Es ist ein schwerwiegender Fehler aufgetreten. Bitte informieren Sie Ihren IT-Beauftragten. FehlerCode: TLSnotAvailable.";
-            return $echoindex;
-        }
-        }
+        // if($LDAPS)
+        // {
+        // if(!@ldap_start_tls($ldapConn))
+        // {
+        //     if($debug)
+        //     {
+        //         echo "Fehler bei der Herstellung einer TLS Verbindung. <br>";
+        //         var_dump($ldapConn);
+        //     }
+        //     $echoindex["error"] = "Es ist ein schwerwiegender Fehler aufgetreten. Bitte informieren Sie Ihren IT-Beauftragten. FehlerCode: TLSnotAvailable.";
+        //     return $echoindex;
+        // }
+        // }
         if($debug)
         {
         echo "Übergebene Parameter sind Plausibel. Es wurde noch KEINE Verbindung mit dem Server hergestellt, dies erfolgt im nächsten Schritt. <br>";
@@ -201,6 +239,18 @@ function connectwithUser($username, $userpasswort)
                 $email = $entries[0]['mail'][0];
                 $CN = $entries[0]['cn'][0];
 
+                if($debug)
+                {
+                    if(empty($email))
+                    echo "Der Nutzer hat im AD noch keine E-Mail-Adresse, deshalb wir der Login im Front-End verweigert. Der Nutzer ist jedoch in der richtigen Sicherheitsgruppe, <br>
+                          welche bestimmt, wer zu AAD synchronisiert wird. Die Synchronisierung müsste demnächst durchgeführt werden.<br>";
+                    echo "Mail: $email <br> CN: $CN<br>";
+                }
+               if(empty($email))
+                {
+                    $echoindex["error"] = "Ihr Account wurde noch nicht synchronisieriert, bitte probieren Sie es später erneut.";
+                    return $echoindex;
+                }
                 $echoindex["mail"] = $email;
                 $echoindex["cn"] = $CN;
                 ldap_unbind($ldapConn);

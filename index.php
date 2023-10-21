@@ -25,11 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         echo "<div class='fehler'> $fehler </div>" ;
         showLogin();
     }
-    else if(empty($email))
-    {
-        echo "<div class='fehler'> Ihr Account wurde noch nicht synchronisieriert, bitte probieren Sie es später erneut. </div>" ;
-        showLogin();
-    }
     else if (isset($email) && isset($CN))
     {
         echo '<div class="login">
