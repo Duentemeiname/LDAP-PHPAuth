@@ -2,6 +2,7 @@
 session_start();
 require_once("dbconnect.php");
 
+
 function checkLDAPInjektion($string)
 {
     return ldap_escape($string, "", LDAP_ESCAPE_FILTER);
@@ -69,36 +70,36 @@ function userLoggedin()
            $neuer_securitytoken = random_string();            
            $Anfrage = "UPDATE securitytokens SET securitytoken = ' $neuer_securitytoken' WHERE identifier = '$identifier'";
            SQLtoDB($Anfrage);        
-           setcookie("identifier", $identifier, time() + (3600 * 24 * 7), '/', '', false, true);
-           setcookie("securitytoken",  $neuer_securitytoken, time() + (3600 * 24 * 7), '/', '', false, true); 
+           setcookie("identifier", $identifier, time() + (3600 * 24 * 7), '/', '', true, true);
+           setcookie("securitytoken",  $neuer_securitytoken, time() + (3600 * 24 * 7), '/', '', true, true); 
            
            //Logge den Benutzer ein
            $_SESSION['userid'] =  $array_securitytoken_DB['user_id'];
+           echo "LOGGIN";
            header("Location: dashboard.php"); 
            return true;
-           
         }
-
      }
-      
-     if(!isset($_SESSION['userid'])) 
+     else
      {
-        userLogout();
+     if(!isset($_SESSION['userid']) && basename($_SERVER['PHP_SELF']) !== 'login.php') 
+     {
         header("Location: login.php"); 
         exit();
      }  
-     if(isset($_SESSION['userid']) && basename($_SERVER['PHP_SELF']) !== 'dashboard.php')
+     if(isset($_SESSION['userid']) && basename($_SERVER['PHP_SELF']) !== 'login.php' && basename($_SERVER['PHP_SELF']) !== 'dashboard.php')
      {
         header("Location: dashboard.php"); 
         exit();
      }
+    }
 }
 
 function userLogout()
 {
-    global $GlobalServerUrl;
+    setcookie("identifier", "", time() - 3600, "/");
+    setcookie("securitytoken", "", time() - 3600, "/");
     session_destroy();
-    setcookie("identifier","",time()-(3600*24*7)); 
-    setcookie("securitytoken","",time()-(3600*24*7)); 
-    header("Location: $GlobalServerUrl index.php");
+    header("Location: login.php");
+    exit();
 }

@@ -12,12 +12,12 @@ body{
   html {
     overflow-x: hidden;
 }
-  
+
+
 
 h1, h2, h3, h4, h5{
     color: white;
     font-weight: 100;
-    font-size: 300%;
     font-family: 'Open Sans', sans-serif;
     display: flex;
     justify-content: center;
@@ -26,7 +26,9 @@ h1, h2, h3, h4, h5{
     padding-top: 0%;
     margin-top: 0%;
 }
-
+h1{
+    font-size: 300%;
+}
 h2{
     font-size: 35px;
 }
@@ -56,7 +58,73 @@ input{
 hr{
     border: 1px solid #133e5e;
 }
-
+a:-webkit-any-link {
+    cursor: pointer;
+    text-decoration: none;
+}
+nav{
+    width: 100%;
+    height: 55px;
+    background-color: #133e5e;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.11);
+}
+nav ul{
+    float: right;
+    margin-right: 5%;
+}
+nav ul li{
+    float: left;
+    list-style: none;
+    position: relative;
+}
+nav ul li a{
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+    font-size:24px;
+    text-align: none;
+    padding-left: 28px;
+    padding-right: 28px;
+    display: block;
+}
+nav ul li a:hover{
+    background-color: white;
+    color: #133e5e;
+}
+nav ul li ul{
+    display: none;
+    position: absolute;
+    background-color: #133e5e;
+    padding: 7px;
+    border-radius: 0px 0px 12px 12px;
+}
+nav ul li:hover ul{
+    display: block;
+}
+nav ul li ul li a{
+    color: white;
+    text-decoration: none;
+    padding: 16px 20px;
+}
+nav ul li ul li a:hover{
+    color: #133e5e;
+    text-decoration: none;
+    padding: 16px 20px;
+    border-radius: 10px;
+}
+.header{
+    float: left;
+    margin-left: 1%;
+    margin-top: 3px;
+    
+}
+.font-family{
+    font-family: 'Open Sans', sans-serif;
+}
+.center{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
 .img{
     height: 248px;
     width: auto;
@@ -66,33 +134,85 @@ hr{
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;     
 }
-.header{
+.container{
+    width: 100%;
     display: flex;
-    height: 80px;
-    background-color: #133e5e;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+    justify-content: space-between;
 }
 
-.header_schrift{
-    color: white;
-    font-size: 25px;
-    font-weight: 700;
-    font-family: 'Open Sans', sans-serif;
-    text-decoration: none;
-    justify-content: center;
-    align-items: center;
+.parentL 
+{
+    position: relative;
+    max-width: 48%;
+    margin-left: 0px;
+    background-color: white;
+}
+.parentL img 
+{
+    width: 100%;
+}
+.parentL .text 
+{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.header365{
     text-align: center;
+    margin-left: 46%;
+    margin-bottom: 5%;
+    font-size: 250%;
+}
+.absatz365{
+    text-align: center;
+    margin-left: 46%;
+    margin-bottom: 7%;
+    font-size: 150%;
+    align-items: stretch;
+}
+.parentL, .parentR {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; 
+    max-width: 48%;
 }
 
+.parentR{
+    background-color: #c1dff9;
+}
+
+.parentR img 
+{
+    width: 100%;
+}
+.parentR .text 
+{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.colorblue{
+    color: #2c6fbb;
+}
+
+
+.zeromargin{
+    margin-top: 0%;
+    margin-bottom: 0%;
+}
+.PaperCutHead{
+    font-size: 150%;
+}
+
+    
 .background{
     background-color: #2c6fbb;
     height: auto;
     margin-top: 0px;
     height: 100%;
 }
-.seiteninhalt{
+.seiteninhalt-login{
     margin-left: 5%;
     margin-right: 5%;
     margin-top: 1%;
@@ -100,7 +220,11 @@ hr{
     align-items: center;
     text-align: center;
 }
-
+.seiteninhalt{
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 1%;
+}
 
  .status_input{
     color: white;
@@ -222,10 +346,8 @@ hr{
     background-color: #2c6fbb;
     border: 2px solid red;
     color: white;
-    justify-content: center;
-    align-items: center;
     text-align: center;
-    display: inline-block;
+    display: block;
     padding: 1%;
     font-size: 150%;
     font-weight: 400;

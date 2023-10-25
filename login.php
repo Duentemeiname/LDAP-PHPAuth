@@ -4,7 +4,15 @@ require_once("functions/userlogin.php");
 include("includes/header.php");
 echo '
 <div class="background">
-<div class="seiteninhalt">';
+<div class="seiteninhalt-login">';
+
+$logout = $_GET["logout"];
+
+if($logout)
+{
+    userLogout();
+    exit;
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") 
 {
@@ -16,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $fehler = $ergebnis['error'];
     if(!empty($fehler))
     {
-        echo "<div class='fehler'> $fehler </div>" ;
+        echo "<div class='fehler center'> $fehler </div>" ;
     }
 
 }

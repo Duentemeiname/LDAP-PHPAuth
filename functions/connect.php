@@ -22,10 +22,10 @@ $ldapNutzer = $DownLevelLogonName.$ldapNutzername;
     {
         if($LDAPS)
         {
-        if(!@ldap_start_tls($ldapConn))
-        {
-                die ("Fehler bei der Herstellung einer TLS Verbindung.");
-        }
+            if(!@ldap_start_tls($ldapConn))
+            {
+                    die ("Fehler bei der Herstellung einer TLS Verbindung.");
+            }
         }
 
         ldap_set_option($ldapConn , LDAP_OPT_PROTOCOL_VERSION, 3);
