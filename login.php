@@ -1,7 +1,7 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\functions.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\userlogin.php');
-include($_SERVER['DOCUMENT_ROOT'] . '\LDAP\includes\header.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '\functions\functions.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '\functions\userlogin.php');
+include($_SERVER['DOCUMENT_ROOT'] . '\includes\header.php');
 echo '
 <div class="background">
 <div class="seiteninhalt-login">';
@@ -61,4 +61,4 @@ function showlogin()
 
 
 echo "</div> </div> </div>";
-include($_SERVER['DOCUMENT_ROOT'] . '\LDAP\includes\footer.php');
+include($_SERVER['DOCUMENT_ROOT'] . '\includes\footer.php');

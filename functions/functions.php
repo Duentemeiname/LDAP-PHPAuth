@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\dbconnect.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '\functions\dbconnect.php');
 
 
 function checkLDAPInjektion($string)

@@ -1,6 +1,6 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\connect.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\functions.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '\functions\connect.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '\functions\functions.php');
 
 function userlogin($username, $userpasswort)
 {

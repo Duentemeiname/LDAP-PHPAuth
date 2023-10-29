@@ -1,7 +1,7 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\LDAPfunctions.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\functions.php');
-include($_SERVER['DOCUMENT_ROOT'] . '\LDAP\config.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '\functions\LDAPfunctions.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '\functions\functions.php');
+include($_SERVER['DOCUMENT_ROOT'] . '\config.php');
 if(islehrer())
 {
     if(basename($_SERVER['PHP_SELF']) !== 'lehrende.php')

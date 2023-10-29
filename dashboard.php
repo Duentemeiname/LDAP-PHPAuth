@@ -1,7 +1,7 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\functions.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\connect.php');
-include($_SERVER['DOCUMENT_ROOT'] . '\LDAP\includes\header.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '\functions\functions.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '\functions\connect.php');
+include($_SERVER['DOCUMENT_ROOT'] . '\includes\header.php');
 userLoggedin();
 if(isitbeauftragter())
 {
@@ -61,4 +61,4 @@ echo '
 
 
 
-include($_SERVER['DOCUMENT_ROOT'] . '\LDAP\includes\footer.php');
+include($_SERVER['DOCUMENT_ROOT'] . '\includes\footer.php');
