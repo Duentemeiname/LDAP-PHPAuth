@@ -27,7 +27,7 @@ function SQLtoDB($Anfrage)
     }
     catch(Exception $e)
     {
-        //Später eintrag in die DB
+        insertlog("datenbank", $e->getMessage());
         return false;
     }
 }
@@ -45,3 +45,17 @@ if ($db_link->query($createDatabaseSQL) !== TRUE)
     die( "Fehler beim Erstellen der Datenbank: " . $conn->error);
 } 
 
+$createDatabaseSQL = "CREATE TABLE IF NOT EXISTS `errorlog`(
+    `id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `typ` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+    `ip` varchar(255) COLLATE utf8_unicode_ci,
+    `vorfall` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+    `user` varchar(255) COLLATE utf8_unicode_ci,
+    `userdevice` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+
+if ($db_link->query($createDatabaseSQL) !== TRUE) 
+{
+    die( "Fehler beim Erstellen der Datenbank: " . $conn->error);
+} 

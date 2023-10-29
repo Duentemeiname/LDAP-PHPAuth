@@ -1,7 +1,7 @@
 <?php
-require_once("functions/functions.php");
-require_once("functions/userlogin.php");
-include("includes/header.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\functions.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\userlogin.php');
+include($_SERVER['DOCUMENT_ROOT'] . '\LDAP\includes\header.php');
 echo '
 <div class="background">
 <div class="seiteninhalt-login">';
@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $fehler = $ergebnis['error'];
     if(!empty($fehler))
     {
-        echo "<div class='fehler center'> $fehler </div>" ;
+        echo "<div class='centerflex'><div class='fehler'> $fehler </div></div>" ;
     }
 
 }
@@ -45,7 +45,7 @@ function showlogin()
     global $ldapDomainName;
 
     echo'<div class="login">
-    <img class="img" src="Windows-Default-Avatar-448x400.png">
+    <img class="img" src="img\Windows-Default-Avatar-448x400.png">
     <h1 class="center">Anderer Benutzer</h1>
     <form method="POST" class="login_form">
     <input class="status_input" type="text" name="nutzername" placeholder="Benutzername" required> </br>
@@ -53,10 +53,12 @@ function showlogin()
     <button class="status_button" type="submit">Anmelden!</button>
     </form>
     <p> Anmelden an: '.$ldapDomainName.' </p>
-    <p> Sollten Sie Probleme beim Login haben, <br> wenden Sie sich an den IT-Beauftragten Ihrer Schule.<p>';
+    <p> Sollten Sie Probleme beim Login haben, <br> wenden Sie sich an den IT-Beauftragten Ihrer Schule.<p>
+    <h2> Bitte beachten Sie, dass es sich um eine Beta handelt, in der Fehler auftreten können! <br>
+    Bitte melden Sie diese Fehler über "Fehler melden". </h2>';
+    
 }
 
 
 echo "</div> </div> </div>";
-include("includes/footer.php");
-
+include($_SERVER['DOCUMENT_ROOT'] . '\LDAP\includes\footer.php');

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("dbconnect.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\dbconnect.php');
 
 
 function checkLDAPInjektion($string)
@@ -87,12 +87,12 @@ function userLoggedin()
         header("Location: login.php"); 
         exit();
      }  
-     if(isset($_SESSION['userid']) && basename($_SERVER['PHP_SELF']) !== 'login.php' && basename($_SERVER['PHP_SELF']) !== 'dashboard.php')
+     
+     if(isset($_SESSION['userid']))
      {
-        header("Location: dashboard.php"); 
-        exit();
-     }
+        return true;
     }
+}
 }
 
 function userLogout()
@@ -102,4 +102,65 @@ function userLogout()
     session_destroy();
     header("Location: login.php");
     exit();
+}
+
+function getuserdevice()
+{
+    $user_agent = $_SERVER['HTTP_USER_AGENT'];
+    $browser = "Unbekannter Browser";
+    $os = "Unbekanntes Betriebssystem";
+    
+    // Browser identifizieren
+    if (preg_match('/MSIE/i', $user_agent) && !preg_match('/Opera/i', $user_agent)) {
+        $browser = 'Internet Explorer';
+    } elseif (preg_match('/Firefox/i', $user_agent)) {
+        $browser = 'Mozilla Firefox';
+    } elseif (preg_match('/Chrome/i', $user_agent)) {
+        $browser = 'Google Chrome';
+    } elseif (preg_match('/Safari/i', $user_agent)) {
+        $browser = 'Apple Safari';
+    } elseif (preg_match('/Opera/i', $user_agent)) {
+        $browser = 'Opera';
+    } elseif (preg_match('/Edge/i', $user_agent)) {
+        $browser = 'Microsoft Edge';
+    } elseif (preg_match('/Netscape/i', $user_agent)) {
+        $browser = 'Netscape';
+    }
+    
+    // Betriebssystem identifizieren
+    if (preg_match('/Windows/i', $user_agent)) {
+        $os = 'Windows';
+    } elseif (preg_match('/Mac/i', $user_agent)) {
+        $os = 'Mac OS X';
+    } elseif (preg_match('/Linux/i', $user_agent)) {
+        $os = 'Linux';
+    } elseif (preg_match('/Unix/i', $user_agent)) {
+        $os = 'Unix';
+    } elseif (preg_match('/Android/i', $user_agent)) {
+        $os = 'Android';
+    } elseif (preg_match('/(iPhone|iPad)/i', $user_agent)) {
+        $os = 'iOS';
+    }
+    
+    $infos_user = "Betriebssystem: ".$os." Browser: ".$browser;
+    return $infos_user;
+}
+function getuserip()
+{
+    return $_SERVER['REMOTE_ADDR'];
+}
+
+function logloggin($username, $log)
+{
+         $username = checkSQLInjektion($username);
+         $Anfrage = "INSERT INTO errorlog(typ, ip, vorfall, user, userdevice) 
+           VALUES ('userlogin', '" . getuserip() . "', '" . $log . "', '" . $username . "', '" . getuserdevice() . "')";
+         SQLtoDB($Anfrage);
+}
+
+function insertlog($typ, $action)
+{
+    $Anfrage = "INSERT INTO errorlog(typ, ip, vorfall, user, userdevice) 
+      VALUES ('".$typ."', 'NONE', '" . $action . "', 'NONE', 'NONE')";
+    SQLtoDB($Anfrage);
 }

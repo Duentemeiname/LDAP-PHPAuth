@@ -1,7 +1,12 @@
 <?php
-require_once("functions/LDAPfunctions.php");
-require_once("functions/functions.php");
-include("config.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\LDAPfunctions.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\functions.php');
+include($_SERVER['DOCUMENT_ROOT'] . '\LDAP\config.php');
+if(islehrer())
+{
+    if(basename($_SERVER['PHP_SELF']) !== 'lehrende.php')
+    $showlehrer = '<li><a href='.$GlobalServerUrl.'lehrende.php>Meine Klasse</a></li>';
+}
 
 echo'
 <!DOCTYPE html>
@@ -14,7 +19,7 @@ echo'
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="\LDAP\style.css">
 </head>
 <body>
 <nav>
@@ -22,17 +27,23 @@ echo'
 <ul>';
     if(basename($_SERVER['PHP_SELF']) !== 'login.php' && basename($_SERVER['PHP_SELF']) !== 'dashboard.php')
     { echo'
-        <li><a href="dashboard.php">Zurück zum Dashboard</a></li>';
+        <li><a href='.$GlobalServerUrl.'dashboard.php>Zurück zum Dashboard</a></li>';
     }
+    echo $showlehrer;
         if(!empty($_SESSION["userid"]))
-        {echo'
+        {
+            echo'
             <li><a href="#">'.returnfirstLetters($_SESSION["userid"]).'</a>
                 <ul>
-                    <li><a href="login.php?logout=true">Logout</a></li>
-                    <li><a href="profil.php">Profil</a></li>
+                    <li><a href='.$GlobalServerUrl.'login.php?logout=true>Logout</a></li>
+                    <li><a href='.$GlobalServerUrl.'profil.php>Profil</a></li>
                 </ul>
             </li>
         ';
+        }
+        if($_SESSION["userid"] == "Administrator" || $_SESSION["userid"] == "administrator")
+        {
+            echo '</li><li><a href='.$GlobalServerUrl.'profil.php>Profil</a></li><li><a href='.$GlobalServerUrl.'login.php?logout=true>Logout</a>';
         }
 echo'
 </ul>

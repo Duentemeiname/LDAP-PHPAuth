@@ -1,5 +1,5 @@
 <?php
-require_once("config.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\config.php');
 
 $DownLevelLogonName = "$ldapDomainName\\"; 
 $ldapNutzer = $DownLevelLogonName.$ldapNutzername;
@@ -22,9 +22,9 @@ $ldapNutzer = $DownLevelLogonName.$ldapNutzername;
     {
         if($LDAPS)
         {
-            if(!@ldap_start_tls($ldapConn))
+            if(!ldap_start_tls($ldapConn))
             {
-                    die ("Fehler bei der Herstellung einer TLS Verbindung.");
+                die ("Fehler bei der Herstellung einer TLS Verbindung. ".ldap_error($ldapConn));
             }
         }
 
