@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '\config.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/config.php');
 
 $DownLevelLogonName = "$ldapDomainName\\"; 
 $ldapNutzer = $DownLevelLogonName.$ldapNutzername;
@@ -38,7 +38,7 @@ $ldapNutzer = $DownLevelLogonName.$ldapNutzername;
             die("LDAP-Bind fehlgeschlagen. Das kann an einem falschen Passwort liegen.");
         }
     } 
-?>
+
 
 
 

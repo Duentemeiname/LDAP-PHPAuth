@@ -1,11 +1,11 @@
 <?php
-define ( 'MYSQL_HOST', 'localhost' );
+define ( 'MYSQL_HOST', $_ENV['MYSQL_HOST'] );
 
-define ( 'MYSQL_BENUTZER',  'LDAP_USER' );
+define ( 'MYSQL_BENUTZER',  $_ENV['MYSQL_USER'] );
 
-define ( 'MYSQL_KENNWORT',  'mU7XP2HF2HKgwjN' );
+define ( 'MYSQL_KENNWORT',  $_ENV['MYSQL_PASSWORD'] );
 
-define ( 'MYSQL_DATENBANK', 'LDAP' );
+define ( 'MYSQL_DATENBANK', $_ENV['MYSQL_DATENBANK'] );
 
 $db_link = new mysqli  (MYSQL_HOST, 
                         MYSQL_BENUTZER, 

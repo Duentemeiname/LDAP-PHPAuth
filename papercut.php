@@ -1,7 +1,8 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '\functions\functions.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '\functions\LDAPfunctions.php');
-include($_SERVER['DOCUMENT_ROOT'] . '\includes\header.php');
+ob_start();
+require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/functions.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/LDAPfunctions.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/includes/header.php');
 userLoggedin();
 echo '
 <div class="background">
@@ -15,4 +16,5 @@ echo '
 <button class="button_redirect" onclick="window.location.href=\'https://wood.mtk.schule/\'">Anmeldung am Webportal</button>
 
 </div></div></div>';
-include($_SERVER['DOCUMENT_ROOT'] . '\includes\footer.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/includes/footer.php');
+ob_end_flush();

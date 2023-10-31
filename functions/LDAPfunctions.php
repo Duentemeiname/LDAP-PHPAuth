@@ -1,7 +1,7 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '\functions\connect.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '\functions\functions.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '\config.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/connect.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/functions.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/config.php');
 
 function getuserarray($username)
 {
@@ -171,9 +171,11 @@ function returnuserarray($username)
 
 function getpapercutid($username)
 {
-    // $entries = getuserarray($username);
-    // $papercutid = $entries[0]['XXXXXX'][0];
-    $papercutid = "63020000";
+
+    $attribute = array("employeeNumber");
+    $filter = "(sAMAccountName=$username)";
+    $entries = doldapsearch($filter, $attribute);
+    $papercutid = $entries[0]["employeeNumber"][0];
     return $papercutid;
 }
 

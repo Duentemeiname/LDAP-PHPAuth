@@ -1,7 +1,8 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '\functions\functions.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '\functions\LDAPfunctions.php');
-include($_SERVER['DOCUMENT_ROOT'] . '\includes\header.php');
+ob_start();
+require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/functions.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/LDAPfunctions.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/includes/header.php');
 userLoggedin();
 if(!islehrer())
 {
@@ -12,8 +13,9 @@ echo'
 <div class="background">
 <div class="seiteninhalt">
 <div class="center">
-<img src="img\2807188.jpg" height="800" width="auto">
+<img src="img\2807188.jpg" height="600" width="auto">
 <h2>Kommt voraussichtlich in Update v1.4.x</h2>
 </div></div></div>
 ';
-include($_SERVER['DOCUMENT_ROOT'] . '\includes\footer.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/includes/footer.php');
+ob_end_flush();
