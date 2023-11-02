@@ -54,7 +54,7 @@ if (!empty($username) || !empty($vorname) || !empty($nachname))
                 <td>'.$result[$i]["givenname"]  .'</td>
                 <td>'.$result[$i]["userprincipalname"]  .'</td>
                 <td>'.$result[$i]["mail"].'</td>
-                <td>PaperCutID</td>
+                <td>'.$returnarray[$i]["papercut"].'</td>
                 </tr>
                 ';                          
             }
@@ -106,7 +106,7 @@ if (!empty($group))
                 <td>'.$result[$i]["givenname"]  .'</td>
                 <td>'.$result[$i]["userprincipalname"]  .'</td>
                 <td>'.$result[$i]["mail"].'</td>
-                <td>PaperCutID</td>
+                <td>'.$returnarray[$i]["papercut"].'</td>
                 </tr>
                 ';                          
             }
