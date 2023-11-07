@@ -1,0 +1,37 @@
+version: "3"
+
+networks:
+  web:
+    external: true
+  dashboard:
+    external: false
+
+services:
+  dashboard-db:
+    image: mariadb:11
+    restart: unless-stopped
+    volumes:
+      - ./data-mariadb:/var/lib/mysql:Z
+    env_file:
+      - ./.envs/.mariadb
+    networks:
+      - dashboard
+    labels:
+      - traefik.enable=false
+  dashboard-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - ./.envs/.mariadb
+      - ./.envs/.app
+    networks:
+      - dashboard
+      - web
+    depends_on:
+      - dashboard-db
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.cloud.rule=Host(`dashboard.bws.mtk.schule`)
+      - traefik.http.routers.cloud.tls=true
+      - traefik.port=80

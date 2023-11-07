@@ -10,11 +10,11 @@ define ( 'MYSQL_DATENBANK', $_ENV['MYSQL_DATENBANK'] );
 define ( 'MYSQL_PORT', $_ENV['MYSQL_PORT'] );
 
 
-$op = fsockopen($_ENV['MYSQL_HOST'], $_ENV['MYSQL_PORT'], $errno, $errstr, $timeout=null);
-if (!$op)
-{
-    die("Datenbank-Server nicht erreichbar!");
-}
+// $op = fsockopen($_ENV['MYSQL_HOST'], $_ENV['MYSQL_PORT'], $errno, $errstr, $timeout=null);
+// if (!$op)
+// {
+//     die("Datenbank-Server nicht erreichbar!");
+// }
 
 $db_link = new mysqli  (MYSQL_HOST, 
                         MYSQL_BENUTZER, 
