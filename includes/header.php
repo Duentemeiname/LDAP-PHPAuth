@@ -1,11 +1,17 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\LDAPfunctions.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\functions.php');
-include($_SERVER['DOCUMENT_ROOT'] . '\LDAP\config.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/LDAPfunctions.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/functions.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/config.php');
 if(islehrer())
 {
     if(basename($_SERVER['PHP_SELF']) !== 'lehrende.php')
-    $showlehrer = '<li><a href='.$GlobalServerUrl.'lehrende.php>Meine Klasse</a></li>';
+    $showlehrer = '
+    <li><a href="#">Lehrende</a>
+        <ul>
+            <li><a href='.$GlobalServerUrl.'lehrende.php>Meine Klasse</a></li>
+            <li><a href='.$GlobalServerUrl.'find.php>SuS-ID</a></li>
+        </ul>
+    </li>';
 }
 
 echo'
@@ -19,7 +25,7 @@ echo'
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <link rel="stylesheet" href="\LDAP\style.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 <nav>

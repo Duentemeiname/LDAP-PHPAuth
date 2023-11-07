@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\dbconnect.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/dbconnect.php');
 
 
 function checkLDAPInjektion($string)
@@ -41,8 +41,8 @@ function setLoginCookie($username)
     $DBUser = checkSQLInjektion($username);
     $Anfrage = "INSERT INTO securitytokens(user_id, identifier, securitytoken) VALUES ('$DBUser', '$identifier', '$SHAsecuritytoken')";
     SQLtoDB($Anfrage);
-    setcookie("identifier", $identifier, time() + (3600 * 24 * 7), '/', '', true, true); 
-    setcookie("securitytoken", $securitytoken, time() + (3600 * 24 * 7), '/', '', true, true); 
+    setcookie("identifier", $identifier, time() + (3600 * 24 * 7), '/', '', false, true); 
+    setcookie("securitytoken", $securitytoken, time() + (3600 * 24 * 7), '/', '', false, true); 
 }
 
 function userLoggedin()
@@ -61,6 +61,7 @@ function userLoggedin()
 
         if(!password_verify($securitytoken,  $array_securitytoken_DB['securitytoken']))
         {  
+            
             userLogout();
             header("Location: login.php"); 
             exit();
@@ -70,8 +71,8 @@ function userLoggedin()
            $neuer_securitytoken = random_string();            
            $Anfrage = "UPDATE securitytokens SET securitytoken = ' $neuer_securitytoken' WHERE identifier = '$identifier'";
            SQLtoDB($Anfrage);        
-           setcookie("identifier", $identifier, time() + (3600 * 24 * 7), '/', '', true, true);
-           setcookie("securitytoken",  $neuer_securitytoken, time() + (3600 * 24 * 7), '/', '', true, true); 
+           setcookie("identifier", $identifier, time() + (3600 * 24 * 7), '/', '', false, true);
+           setcookie("securitytoken",  $neuer_securitytoken, time() + (3600 * 24 * 7), '/', '', false, true); 
            
            //Logge den Benutzer ein
            $_SESSION['userid'] =  $array_securitytoken_DB['user_id'];

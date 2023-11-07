@@ -1,7 +1,7 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\connect.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\functions.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\config.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/connect.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/functions.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/config.php');
 
 function getuserarray($username)
 {
@@ -171,9 +171,11 @@ function returnuserarray($username)
 
 function getpapercutid($username)
 {
-    // $entries = getuserarray($username);
-    // $papercutid = $entries[0]['XXXXXX'][0];
-    $papercutid = "63020000";
+
+    $attribute = array("employeeNumber");
+    $filter = "(sAMAccountName=$username)";
+    $entries = doldapsearch($filter, $attribute);
+    $papercutid = $entries[0]["employeeNumber"][0];
     return $papercutid;
 }
 
@@ -246,7 +248,7 @@ function searchuser($username, $vorname, $nachname)
         return false;
     }
     
-    $attribute = array("samaccountname", "cn", "givenname", "sn", "mail", "userprincipalname");
+    $attribute = array("samaccountname", "cn", "givenname", "sn", "mail", "userprincipalname", "employeeNumber");
     $filter .= " (| (memberof=$ldapSecurityGroupLehrer) (memberof=$ldapSecurityGroupSuS) ))";
     $entries = doldapsearch($filter, $attribute);
 
@@ -265,7 +267,7 @@ function searchuser($username, $vorname, $nachname)
         $returnarray[$i]["givenname"]           = $entries[$i]["givenname"][0];
         $returnarray[$i]["userprincipalname"]   = $entries[$i]["userprincipalname"][0];
         $returnarray[$i]["mail"]                = $entries[$i]["mail"][0];
-        //$returnarray[$i]["papercut"]            = $entries[$i]["papercut"][0]; -> GRÖßE ÄNDERN!
+        $returnarray[$i]["papercut"]            = $entries[$i]["employeeNumber"][0];
     }
     return($returnarray);
 }
@@ -276,7 +278,7 @@ function getmembersecuritygroups($groupDn)
     $groupDn = "CN=".$groupDn.",".$ldapOUSecurityGroupClasses;
 
     $filter = "(&(objectClass=user)(memberOf=$groupDn))";
-    $attribute = array("samaccountname", "cn", "givenname", "sn", "mail", "userprincipalname");
+    $attribute = array("samaccountname", "cn", "givenname", "sn", "mail", "userprincipalname", "employeeNumber");
     $entries = doldapsearch($filter, $attribute);
 
     $sizeoutarray = $entries["count"];
@@ -294,7 +296,7 @@ function getmembersecuritygroups($groupDn)
         $returnarray[$i]["givenname"]           = $entries[$i]["givenname"][0];
         $returnarray[$i]["userprincipalname"]   = $entries[$i]["userprincipalname"][0];
         $returnarray[$i]["mail"]                = $entries[$i]["mail"][0];
-        //$returnarray[$i]["papercut"]            = $entries[$i]["papercut"][0]; -> GRÖßE ÄNDERN!
+        $returnarray[$i]["papercut"]            = $entries[$i]["employeeNumber"][0];
     }
     return($returnarray);
 }
@@ -320,4 +322,32 @@ function getsecuritygroups()
         $kurzel_select .= '<option value="' .$entries[$i]["cn"][0].'">' .$entries[$i]["name"][0]. '</option>';
     }
     return $kurzel_select;
+}
+
+function searchupn($upn)
+{
+    global $ldapSecurityGroupSuS;
+
+    $attribute = array("samaccountname", "cn", "givenname", "sn", "mail", "userprincipalname", "employeeNumber");
+    $filter = "(&(objectClass=user)(mail=$upn*)(memberof=$ldapSecurityGroupSuS))";
+    $entries = doldapsearch($filter, $attribute);
+
+    $sizeoutarray = $entries["count"];
+
+    $returnarray = array($sizeoutarray + 1);
+    $returnarray["count"] = (int)$sizeoutarray;
+
+    for($i = 0; $i < $sizeoutarray; $i++)
+    {
+        $returnarray[$i]                        = array(7);
+        $returnarray[$i]["count"]               = (int) 6;
+        $returnarray[$i]["cn"]                  = $entries[$i]["cn"][0];
+        $returnarray[$i]["samaccountname"]      = $entries[$i]["samaccountname"][0];
+        $returnarray[$i]["sn"]                  = $entries[$i]["sn"][0];
+        $returnarray[$i]["givenname"]           = $entries[$i]["givenname"][0];
+        $returnarray[$i]["userprincipalname"]   = $entries[$i]["userprincipalname"][0];
+        $returnarray[$i]["mail"]                = $entries[$i]["mail"][0];
+        $returnarray[$i]["papercut"]            = $entries[$i]["employeeNumber"][0];
+    }
+    return($returnarray);
 }

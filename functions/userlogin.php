@@ -1,6 +1,6 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\connect.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\functions.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/connect.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/functions.php');
 
 function userlogin($username, $userpasswort)
 {
@@ -21,7 +21,7 @@ function userlogin($username, $userpasswort)
         {
             logloggin($username, "Login abgelehnt");
             $echoindex["error"] = "Ungültiger Benutzername oder Passwort. <br> Bitte versuchen Sie es erneut.";
+		return $echoindex;
         }
     ldap_close($ldapConnAuth);
-    return $echoindex;
 }

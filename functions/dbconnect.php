@@ -1,16 +1,27 @@
 <?php
-define ( 'MYSQL_HOST', 'localhost' );
+define ( 'MYSQL_HOST', $_ENV['MYSQL_HOST'] );
 
-define ( 'MYSQL_BENUTZER',  'LDAP_USER' );
+define ( 'MYSQL_BENUTZER',  $_ENV['MYSQL_USER'] );
 
-define ( 'MYSQL_KENNWORT',  'mU7XP2HF2HKgwjN' );
+define ( 'MYSQL_KENNWORT',  $_ENV['MYSQL_PASSWORD'] );
 
-define ( 'MYSQL_DATENBANK', 'LDAP' );
+define ( 'MYSQL_DATENBANK', $_ENV['MYSQL_DATENBANK'] );
+
+define ( 'MYSQL_PORT', $_ENV['MYSQL_PORT'] );
+
+
+$op = fsockopen($_ENV['MYSQL_HOST'], $_ENV['MYSQL_PORT'], $errno, $errstr, $timeout=null);
+if (!$op)
+{
+    die("Datenbank-Server nicht erreichbar!");
+}
 
 $db_link = new mysqli  (MYSQL_HOST, 
                         MYSQL_BENUTZER, 
                         MYSQL_KENNWORT, 
-                        MYSQL_DATENBANK);
+                        MYSQL_DATENBANK,
+                        MYSQL_PORT,
+                        );
 
 // Verbindung prüfen
 if ($db_link->connect_error) 

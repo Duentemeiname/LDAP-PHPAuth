@@ -1,7 +1,8 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\functions.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '\LDAP\functions\LDAPfunctions.php');
-include($_SERVER['DOCUMENT_ROOT'] . '\LDAP\includes\header.php');
+ob_start();
+require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/functions.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/LDAPfunctions.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/includes/header.php');
 userLoggedin();
 if(!isitbeauftragter())
 {
@@ -53,7 +54,7 @@ if (!empty($username) || !empty($vorname) || !empty($nachname))
                 <td>'.$result[$i]["givenname"]  .'</td>
                 <td>'.$result[$i]["userprincipalname"]  .'</td>
                 <td>'.$result[$i]["mail"].'</td>
-                <td>PaperCutID</td>
+                <td>'.$returnarray[$i]["papercut"].'</td>
                 </tr>
                 ';                          
             }
@@ -105,7 +106,7 @@ if (!empty($group))
                 <td>'.$result[$i]["givenname"]  .'</td>
                 <td>'.$result[$i]["userprincipalname"]  .'</td>
                 <td>'.$result[$i]["mail"].'</td>
-                <td>PaperCutID</td>
+                <td>'.$returnarray[$i]["papercut"].'</td>
                 </tr>
                 ';                          
             }
@@ -156,4 +157,5 @@ echo'
 </div></div>
 
 ';
-include($_SERVER['DOCUMENT_ROOT'] . '\LDAP\includes\footer.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/includes/footer.php');
+ob_end_flush();
