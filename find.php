@@ -31,9 +31,9 @@ if(!empty($upn))
             <th>Benutzername:</th>
             <th>Nachname:</th>
             <th>Vorname:</th>
-            <th>UPN:</th>
-            <th>Microsoft:</th>
-            <th>PaperCut:</th>
+            <th>UPN-Lokal:</th>
+            <th>UPN-Microsoft:</th>
+            <th>PaperCut-ID:</th>
         </tr>
         ';
 
@@ -49,7 +49,7 @@ if(!empty($upn))
                 <td>'.$result[$i]["givenname"]  .'</td>
                 <td>'.$result[$i]["userprincipalname"]  .'</td>
                 <td>'.$result[$i]["mail"].'</td>
-                <td>'.$returnarray[$i]["papercut"].'</td>
+                <td>'.$result[$i]["papercut"].'</td>
                 </tr>
                 ';                          
             }
@@ -68,7 +68,7 @@ echo'
 <div class="background">
 <div class="seiteninhalt">
 <div class="login">
-<h2>Identifizieren Sie Pseudonyme von Schülern.</h2><hr>
+<h1>Identifizieren Sie Pseudonyme von Schülern.</h1><hr>
 <p>Bitte geben Sie das Pseudonym ein, um den Schüler zu identifizieren.</p>
 <form method="GET" class="login_form">
     <input class="status_input" type="text" name="upn" placeholder="Pseudonym"> </br>

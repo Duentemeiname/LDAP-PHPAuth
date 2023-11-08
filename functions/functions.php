@@ -146,9 +146,21 @@ function getuserdevice()
     $infos_user = "Betriebssystem: ".$os." Browser: ".$browser;
     return $infos_user;
 }
-function getuserip()
+function getuserip() 
 {
-    return $_SERVER['REMOTE_ADDR'];
+    if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) 
+    {
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } 
+    elseif (isset($_SERVER['HTTP_CLIENT_IP']) && !empty($_SERVER['HTTP_CLIENT_IP'])) 
+    {
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    } 
+    else 
+    {
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
+    return trim(strtok($ip, ','));
 }
 
 function logloggin($username, $log)
@@ -164,4 +176,110 @@ function insertlog($typ, $action)
     $Anfrage = "INSERT INTO errorlog(typ, ip, vorfall, user, userdevice) 
       VALUES ('".$typ."', 'NONE', '" . $action . "', 'NONE', 'NONE')";
     SQLtoDB($Anfrage);
+}
+
+function checkuserlocked($username)
+{
+    $username = checkSQLInjektion($username);
+    $Anfrage = "SELECT * FROM lockeduser WHERE userid = '$username'";
+    $entries = SQLtoDB($Anfrage);
+    $rowCount = $entries->num_rows;
+    if($rowCount > 0)
+    {       
+        $array = $entries->fetch_assoc();
+        $lastTryTimestamp = strtotime($array["lasttry"]);
+        $currentTime = time();
+
+        $timeDifference = $currentTime - $lastTryTimestamp;
+
+        if ($timeDifference > 300) 
+        {
+            $Anfrage = "DELETE FROM lockeduser WHERE userid = '$username'";
+            SQLtoDB($Anfrage);
+            return true;
+        } 
+        else 
+        {
+            if($array["tries"] < 5)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+    else
+    {
+        return true;
+    }
+}
+function deletefalsepassword($username)
+{
+    $username = checkSQLInjektion($username);
+    $Anfrage = "SELECT * FROM lockeduser WHERE userid = '$username'";
+    $entries = SQLtoDB($Anfrage);
+
+    $rowCount = $entries->num_rows;
+
+    if($rowCount > 0)
+    {     
+        $Anfrage = "DELETE FROM lockeduser WHERE userid = '$username'";
+        SQLtoDB($Anfrage);
+        return true;
+    }
+    else
+    {
+        return true;
+    }
+}
+function addfalsepassword($username)
+{
+    $username = checkSQLInjektion($username);
+    $Anfrage = "SELECT * FROM lockeduser WHERE userid = '$username'";
+    $entries = SQLtoDB($Anfrage);
+
+    $rowCount = $entries->num_rows;
+
+    if($rowCount > 0)
+    {
+        $Anfrage = "UPDATE lockeduser SET tries = tries + 1, lasttry = '" . date("Y-m-d H:i:s") . "' WHERE userid = '" . $username . "'";
+        SQLtoDB($Anfrage);
+    }
+    else
+    {
+        $Anfrage = "INSERT INTO lockeduser(userid, tries, lasttry) 
+        VALUES ('".$username."', '1', '" . date("Y-m-d H:i:s") . "')";
+        SQLtoDB($Anfrage);
+    }
+    
+}
+
+function externallog($username, $status)
+{
+    $logDatei = 'log.txt';
+    if (!file_exists($logDatei)) 
+    {
+        $neueLogDatei = fopen($logDatei, 'w');
+
+        if ($neueLogDatei)  
+        {
+            fclose($neueLogDatei);
+            insertlog("Create logFile", "Log Datei wurde erfolgreich erstellt.");
+        } else 
+        {
+            insertlog("Create logFile", "Log Datei konnte nicht erstellt werden.");
+        }
+    }
+
+    if (is_writable($logDatei)) 
+    {
+        $logText = "Date:" . date('Y-m-d H:i:s') . ";IP:".getuserip().";User:".$username.";Loginstatus:".$status. PHP_EOL;
+        file_put_contents($logDatei, $logText, FILE_APPEND);
+    } 
+    else 
+    {
+        insertlog("Create logFile", "Log Datei konnte nicht beschrieben werden.");
+    }
 }

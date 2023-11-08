@@ -1,13 +1,13 @@
 <?php
 
 /* Hier die Konfiguration des jeweiligen Servers ändern*/
-$ldapServer = "bws.mtk.schule";
-$ldapPort = 389;
-$ldapDomainName = "BWS";
-$ldapBaseDn = "DC=bws,DC=mtk,DC=schule";
-$ldapNutzername = $_ENV['ldapNutzername'];                            
+$ldapServer = $_ENV['ldapServer']; 
+$ldapPort = $_ENV['ldapPort']; 
+$ldapDomainName = $_ENV['ldapDomainName']; 
+$ldapBaseDn = $_ENV['ldapBaseDn']; 
+$ldapNutzername = $_ENV['ldapNutzername'];                          
 $ldapPasswort = $_ENV['ldapPasswort'];
-$GlobalServerUrl = "https://dashboard.bws.mtk.schule/"; //WICHTIG: Mit Slash am Ende!
+$GlobalServerUrl = $_ENV['globalServerUrl']; //WICHTIG: Mit Slash am Ende!
 
 
 /*LDAPS Verbindung über TLS*/
@@ -21,9 +21,10 @@ $AADAnwendungsClient = "";
 $AADMandantID = "";
 
 /* Ab hier sind in der Regel keine Änderungen mehr notwendig.*/
-$ldapSecurityGroupAAD           = "CN=grpAzureSyncSuS,OU=Security,OU=Group,OU=MTKADMIN,".$ldapBaseDn; //CN=grpAzureSyncSuS,OU=Security,OU=Group,OU=MTKADMIN,DC=bws,DC=mtk,DC=schule
+$ldapSecurityGroupAAD           = "CN=LDAP-Allow,OU=Security,".$ldapBaseDn;
 $ldapSecurityGroupDomänenAdmins = "CN=Domänen-Admins,CN=Users,".$ldapBaseDn;
-$ldapSecurityGroupITBeauftragte = "CN=IT-Beauftragte,OU=Rollen,OU=Gruppen,".$ldapBaseDn;   //CN=IT-Beauftragte,OU=Rollen,OU=Benutzer,OU=schule,DC=bws,DC=mtk,DC=schule
-$ldapSecurityGroupLehrer        = "CN=Alle Lehrer,OU=Benutzer,OU=schule,".$ldapBaseDn; //CN=Alle Lehrer,OU=Benutzer,OU=schule,DC=bws,DC=mtk,DC=schule
-$ldapSecurityGroupSuS           = "CN=Alle Schüler,OU=Benutzer,OU=schule,".$ldapBaseDn; //CN=Alle Schüler,OU=Benutzer,OU=schule,DC=bws,DC=mtk,DC=schule
-$ldapOUSecurityGroupClasses     = "OU=Klassen,OU=Gruppen,OU=schule,".$ldapBaseDn; //OU=Klassen,OU=Gruppen,OU=schule,DC=bws,DC=mtk,DC=schule
+$ldapSecurityGroupITBeauftragte = "CN=IT-Test,OU=Security,".$ldapBaseDn;
+$ldapSecurityGroupLehrer        = "CN=Lehrende-Test,OU=Security,".$ldapBaseDn;
+$ldapSecurityGroupSuS           = "CN=SuS-Test,OU=Security,".$ldapBaseDn;
+$ldapOUSecurityGroupClasses     = "OU=Security,".$ldapBaseDn;
+$ldapUserLoginAllowed           = "OU=Domain Benutzer,".$ldapBaseDn;

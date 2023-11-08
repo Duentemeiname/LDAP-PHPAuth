@@ -6,7 +6,7 @@ include($_SERVER['DOCUMENT_ROOT'] . '/includes/header.php');
 userLoggedin();
 if(!isitbeauftragter())
 {
-    header('Location dashboard.php');
+    header('Location: dashboard.php');
     exit;
 }
 $username = checkLDAPInjektion($_GET["nutzername"]);
@@ -36,9 +36,9 @@ if (!empty($username) || !empty($vorname) || !empty($nachname))
             <th>Benutzername:</th>
             <th>Nachname:</th>
             <th>Vorname:</th>
-            <th>UPN:</th>
-            <th>Microsoft:</th>
-            <th>PaperCut:</th>
+            <th>UPN-AD:</th>
+            <th>UPN-AAD:</th>
+            <th>PaperCut-ID:</th>
         </tr>
         ';
 
@@ -54,7 +54,7 @@ if (!empty($username) || !empty($vorname) || !empty($nachname))
                 <td>'.$result[$i]["givenname"]  .'</td>
                 <td>'.$result[$i]["userprincipalname"]  .'</td>
                 <td>'.$result[$i]["mail"].'</td>
-                <td>'.$returnarray[$i]["papercut"].'</td>
+                <td>'.$result[$i]["papercut"].'</td>
                 </tr>
                 ';                          
             }
@@ -88,9 +88,9 @@ if (!empty($group))
             <th>Benutzername:</th>
             <th>Nachname:</th>
             <th>Vorname:</th>
-            <th>UPN:</th>
-            <th>Microsoft:</th>
-            <th>PaperCut:</th>
+            <th>UPN-AD:</th>
+            <th>UPN-AAD:</th>
+            <th>PaperCut-ID:</th>
         </tr>
         ';
 
@@ -106,7 +106,7 @@ if (!empty($group))
                 <td>'.$result[$i]["givenname"]  .'</td>
                 <td>'.$result[$i]["userprincipalname"]  .'</td>
                 <td>'.$result[$i]["mail"].'</td>
-                <td>'.$returnarray[$i]["papercut"].'</td>
+                <td>'.$result[$i]["papercut"].'</td>
                 </tr>
                 ';                          
             }

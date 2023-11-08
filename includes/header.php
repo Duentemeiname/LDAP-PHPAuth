@@ -4,7 +4,6 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/functions.php');
 include($_SERVER['DOCUMENT_ROOT'] . '/config.php');
 if(islehrer())
 {
-    if(basename($_SERVER['PHP_SELF']) !== 'lehrende.php')
     $showlehrer = '
     <li><a href="#">Lehrende</a>
         <ul>

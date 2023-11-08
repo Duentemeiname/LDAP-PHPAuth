@@ -36,6 +36,7 @@ function getuserarray($username)
     }
 
 }
+
 function doldapsearch($suchFilter, $attribute)
 {
     global $ldapConn, $ldapBaseDn;
@@ -163,7 +164,8 @@ function returnuserarray($username)
         $lastchange = date("d-m-Y H:i:s", $timestamp);
         $result["whenchanged"] = $lastchange;
 
-        $AccountExpiresFormatted = date("d-m-Y H:i:s", $result["accountexpires"]/10000000-11644473600);
+        $timestamp = intval($result["accountexpires"]/10000000-11644473600);
+        $AccountExpiresFormatted = date("d-m-Y H:i:s", $timestamp);
         $result["accountexpires"] =  $AccountExpiresFormatted;
 
     return $result;
@@ -172,11 +174,30 @@ function returnuserarray($username)
 function getpapercutid($username)
 {
 
-    $attribute = array("employeeNumber");
+    $attribute = array("employeenumber");
     $filter = "(sAMAccountName=$username)";
     $entries = doldapsearch($filter, $attribute);
-    $papercutid = $entries[0]["employeeNumber"][0];
+    $papercutid = $entries[0]["employeenumber"][0];
     return $papercutid;
+}
+
+function loginallowed($username)
+{
+    global $ldapUserLoginAllowed ;
+    
+    $userid = checkLDAPInjektion($username);
+    $attribute = array("samaccountname");
+    $filter = "(&(objectClass=user)(sAMAccountName=$userid))";
+    $entries = doldapsearchnew($filter, $attribute, $ldapUserLoginAllowed);
+   
+    if ($entries['count'] == 1) 
+    {
+        return true;
+    } 
+    else
+    {
+        return false;
+    }
 }
 
 function isitbeauftragter()
@@ -248,7 +269,7 @@ function searchuser($username, $vorname, $nachname)
         return false;
     }
     
-    $attribute = array("samaccountname", "cn", "givenname", "sn", "mail", "userprincipalname", "employeeNumber");
+    $attribute = array("samaccountname", "cn", "givenname", "sn", "mail", "userprincipalname", "employeenumber");
     $filter .= " (| (memberof=$ldapSecurityGroupLehrer) (memberof=$ldapSecurityGroupSuS) ))";
     $entries = doldapsearch($filter, $attribute);
 
@@ -266,8 +287,22 @@ function searchuser($username, $vorname, $nachname)
         $returnarray[$i]["sn"]                  = $entries[$i]["sn"][0];
         $returnarray[$i]["givenname"]           = $entries[$i]["givenname"][0];
         $returnarray[$i]["userprincipalname"]   = $entries[$i]["userprincipalname"][0];
-        $returnarray[$i]["mail"]                = $entries[$i]["mail"][0];
-        $returnarray[$i]["papercut"]            = $entries[$i]["employeeNumber"][0];
+        if(empty($entries[$i]["mail"][0]))
+        {
+            $returnarray[$i]["mail"] = "N/A";
+        }
+        else
+        {
+        $returnarray[$i]["mail"]            = $entries[$i]["mail"][0];
+        }
+        if(empty($entries[$i]["employeenumber"][0]))
+        {
+            $returnarray[$i]["papercut"] = "N/A";
+        }
+        else
+        {
+            $returnarray[$i]["papercut"]    = $entries[$i]["employeenumber"][0];
+        }
     }
     return($returnarray);
 }
@@ -278,7 +313,7 @@ function getmembersecuritygroups($groupDn)
     $groupDn = "CN=".$groupDn.",".$ldapOUSecurityGroupClasses;
 
     $filter = "(&(objectClass=user)(memberOf=$groupDn))";
-    $attribute = array("samaccountname", "cn", "givenname", "sn", "mail", "userprincipalname", "employeeNumber");
+    $attribute = array("samaccountname", "cn", "givenname", "sn", "mail", "userprincipalname", "employeenumber");
     $entries = doldapsearch($filter, $attribute);
 
     $sizeoutarray = $entries["count"];
@@ -295,8 +330,22 @@ function getmembersecuritygroups($groupDn)
         $returnarray[$i]["sn"]                  = $entries[$i]["sn"][0];
         $returnarray[$i]["givenname"]           = $entries[$i]["givenname"][0];
         $returnarray[$i]["userprincipalname"]   = $entries[$i]["userprincipalname"][0];
-        $returnarray[$i]["mail"]                = $entries[$i]["mail"][0];
-        $returnarray[$i]["papercut"]            = $entries[$i]["employeeNumber"][0];
+        if(empty($entries[$i]["mail"][0]))
+        {
+            $returnarray[$i]["mail"] = "N/A";
+        }
+        else
+        {
+        $returnarray[$i]["mail"]            = $entries[$i]["mail"][0];
+        }
+        if(empty($entries[$i]["employeenumber"][0]))
+        {
+            $returnarray[$i]["papercut"] = "N/A";
+        }
+        else
+        {
+            $returnarray[$i]["papercut"]    = $entries[$i]["employeenumber"][0];
+        }
     }
     return($returnarray);
 }
@@ -328,7 +377,7 @@ function searchupn($upn)
 {
     global $ldapSecurityGroupSuS;
 
-    $attribute = array("samaccountname", "cn", "givenname", "sn", "mail", "userprincipalname", "employeeNumber");
+    $attribute = array("samaccountname", "cn", "givenname", "sn", "mail", "userprincipalname", "employeenumber");
     $filter = "(&(objectClass=user)(mail=$upn*)(memberof=$ldapSecurityGroupSuS))";
     $entries = doldapsearch($filter, $attribute);
 
@@ -346,8 +395,23 @@ function searchupn($upn)
         $returnarray[$i]["sn"]                  = $entries[$i]["sn"][0];
         $returnarray[$i]["givenname"]           = $entries[$i]["givenname"][0];
         $returnarray[$i]["userprincipalname"]   = $entries[$i]["userprincipalname"][0];
-        $returnarray[$i]["mail"]                = $entries[$i]["mail"][0];
-        $returnarray[$i]["papercut"]            = $entries[$i]["employeeNumber"][0];
+        if(empty($entries[$i]["mail"][0]))
+        {
+            $returnarray[$i]["mail"] = "N/A";
+        }
+        else
+        {
+            $returnarray[$i]["mail"]            = $entries[$i]["mail"][0];
+        }
+
+        if(empty($entries[$i]["employeenumber"][0]))
+        {
+            $returnarray[$i]["papercut"] = "N/A";
+        }
+        else
+        {
+            $returnarray[$i]["papercut"]            = $entries[$i]["employeenumber"][0];
+        }
     }
     return($returnarray);
 }

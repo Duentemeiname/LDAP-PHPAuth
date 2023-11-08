@@ -10,12 +10,6 @@ define ( 'MYSQL_DATENBANK', $_ENV['MYSQL_DATENBANK'] );
 define ( 'MYSQL_PORT', $_ENV['MYSQL_PORT'] );
 
 
-// $op = fsockopen($_ENV['MYSQL_HOST'], $_ENV['MYSQL_PORT'], $errno, $errstr, $timeout=null);
-// if (!$op)
-// {
-//     die("Datenbank-Server nicht erreichbar!");
-// }
-
 $db_link = new mysqli  (MYSQL_HOST, 
                         MYSQL_BENUTZER, 
                         MYSQL_KENNWORT, 
@@ -64,6 +58,18 @@ $createDatabaseSQL = "CREATE TABLE IF NOT EXISTS `errorlog`(
     `user` varchar(255) COLLATE utf8_unicode_ci,
     `userdevice` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
     `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+
+if ($db_link->query($createDatabaseSQL) !== TRUE) 
+{
+    die( "Fehler beim Erstellen der Datenbank: " . $conn->error);
+} 
+
+$createDatabaseSQL = "CREATE TABLE IF NOT EXISTS `lockeduser`(
+    `id` int(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `userid` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+    `tries` int(10) COLLATE utf8_unicode_ci NOT NULL,
+    `lasttry` timestamp NOT NULL 
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 
 if ($db_link->query($createDatabaseSQL) !== TRUE) 

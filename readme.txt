@@ -1,5 +1,7 @@
 Hinweise zur Installation:
 
+Aufgrund des externen Logfiles brauch der HTTP-User schreibrechte in seinem Ordner!
+
 1. Im Dockerfile bzw später in dem Docker Umgebungsvariablen anlegen. Folgende sind notwendig:
 
   MYSQL_HOST= IP-Adresse, des Datenbankservers
