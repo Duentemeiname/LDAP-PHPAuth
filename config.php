@@ -7,7 +7,7 @@ $ldapDomainName = $_ENV['ldapDomainName'];
 $ldapBaseDn = $_ENV['ldapBaseDn']; 
 $ldapNutzername = $_ENV['ldapNutzername'];                          
 $ldapPasswort = $_ENV['ldapPasswort'];
-$GlobalServerUrl = $_ENV['globalServerUrl']; //WICHTIG: Mit Slash am Ende!
+$GlobalServerUrl = $_SERVER['HTTP_HOST']; //WICHTIG: Mit Slash am Ende!
 
 
 /*LDAPS Verbindung über TLS*/
