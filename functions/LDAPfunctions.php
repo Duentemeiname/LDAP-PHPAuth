@@ -309,9 +309,26 @@ function searchuser($username, $vorname, $nachname)
 
 function getmembersecuritygroups($groupDn)
 {
-    global $ldapOUSecurityGroupClasses;
-    $groupDn = "CN=".$groupDn.",".$ldapOUSecurityGroupClasses;
+    global $ldapSecurityGroupLehrer, $ldapSecurityGroupSuS, $ldapOUSecurityGroupClasses;
 
+    preg_match("/CN=([^,]+)/", $ldapSecurityGroupLehrer, $matches);
+    $cnleherer = $matches[1];
+    preg_match("/CN=([^,]+)/", $ldapSecurityGroupSuS, $matches);
+    $cnsus = $matches[1];
+
+    if($groupDn == $cnleherer)
+    {
+        $groupDn = $ldapSecurityGroupLehrer;
+    }
+    else if($groupDn == $cnsus)
+    {
+        $groupDn = $ldapSecurityGroupSuS;
+    }
+    else
+    {
+        $groupDn = "CN=".$groupDn.",".$ldapOUSecurityGroupClasses;
+    }
+    
     $filter = "(&(objectClass=user)(memberOf=$groupDn))";
     $attribute = array("samaccountname", "cn", "givenname", "sn", "mail", "userprincipalname", "employeenumber");
     $entries = doldapsearch($filter, $attribute);
@@ -373,6 +390,7 @@ function getsecuritygroups()
     return $kurzel_select;
 }
 
+//do not change -> provides export!
 function searchupn($upn)
 {
     global $ldapSecurityGroupSuS;

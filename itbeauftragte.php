@@ -2,7 +2,6 @@
 ob_start();
 require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/functions.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/LDAPfunctions.php');
-include($_SERVER['DOCUMENT_ROOT'] . '/includes/header.php');
 userLoggedin();
 if(!isitbeauftragter())
 {
@@ -13,6 +12,9 @@ $username = checkLDAPInjektion($_GET["nutzername"]);
 $vorname = checkLDAPInjektion($_GET["vorname"]);
 $nachname = checkLDAPInjektion($_GET["nachname"]);
 $group = checkLDAPInjektion($_GET["group"]);
+$export = $_GET["export"];
+
+$currentURL = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 $kurzel_select = getsecuritygroups();
 
@@ -23,24 +25,33 @@ if (!empty($username) || !empty($vorname) || !empty($nachname))
     if(!$result)
     {
         echo "<div class='fehler centerflex'>Es ist ein unbekannter Fehler bei der Suche aufgetreten.</div>" ;
+        exit;
     }
     else
     {
-        $sizearray = $result["count"];
+        if($export == true)
+        {
+            export($result);
+            exit;
+        }
 
+        $sizearray = $result["count"];
         $Ausgabe .= ' 
+        <h2>Suchergebnis für: '.$username.' '.$vorname.' '.$nachname.'  </h2>
+        <a href="' . $currentURL . '&export=true" class="exportbutton">Exportieren</a>
         <div class="centerflex">
         <table class="Tabelle"> 
-        <tr> 
-            <th>Name:</th> 
-            <th>Benutzername:</th>
-            <th>Nachname:</th>
-            <th>Vorname:</th>
-            <th>UPN-AD:</th>
-            <th>UPN-AAD:</th>
-            <th>PaperCut-ID:</th>
-        </tr>
+            <tr> 
+                <th>Name:</th> 
+                <th>Benutzername:</th>
+                <th>Nachname:</th>
+                <th>Vorname:</th>
+                <th>UPN-AD:</th>
+                <th>UPN-AAD:</th>
+                <th>PaperCut-ID:</th>
+            </tr>
         ';
+    
 
         if($sizearray > 0)
         {
@@ -61,7 +72,7 @@ if (!empty($username) || !empty($vorname) || !empty($nachname))
         }   
         else
         {
-            $Ausgabe .= '<td colspan="6">Keine Nutzer, die Ihren Angaben entsprechen, gefunden.</td>';
+            $Ausgabe .= '<td colspan="7">Keine Nutzer, die Ihren Angaben entsprechen, gefunden.</td>';
         }
 
         $Ausgabe .= '</table></div>';
@@ -72,15 +83,25 @@ if (!empty($group))
 {
 
     $result = getmembersecuritygroups($group);
+
     if(!$result)
     {
         echo "<div class='fehler centerflex'>Es ist ein unbekannter Fehler bei der Suche aufgetreten.</div>" ;
+        exit;
     }
     else
     {
+        if($export == true)
+        {
+            export($result);
+            exit;
+        }
+
         $sizearray = $result["count"];
 
         $Ausgabe .= ' 
+        <h2>Mitglieder der Gruppe: '.$group.' </h2>
+        <a href="' . $currentURL . '&export=true" class="exportbutton">Exportieren</a>
         <div class="centerflex">
         <table class="Tabelle"> 
         <tr> 
@@ -113,7 +134,7 @@ if (!empty($group))
         }   
         else
         {
-            $Ausgabe .= '<td colspan="6">Keine Nutzer, die Ihren Angaben entsprechen, gefunden.</td>';
+            $Ausgabe .= '<td colspan="7">Keine Nutzer, die Ihren Angaben entsprechen, gefunden.</td>';
         }
 
         $Ausgabe .= '</table></div>';
@@ -121,6 +142,7 @@ if (!empty($group))
 
 
 }
+include($_SERVER['DOCUMENT_ROOT'] . '/includes/header.php');
 
 echo'
 <div class="background">

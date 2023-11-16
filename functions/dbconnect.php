@@ -1,13 +1,24 @@
 <?php
-define ( 'MYSQL_HOST', $_ENV['MYSQL_HOST'] );
+// define ( 'MYSQL_HOST', $_ENV['MYSQL_HOST'] );
 
-define ( 'MYSQL_BENUTZER',  $_ENV['MYSQL_USER'] );
+// define ( 'MYSQL_BENUTZER',  $_ENV['MYSQL_USER'] );
 
-define ( 'MYSQL_KENNWORT',  $_ENV['MYSQL_PASSWORD'] );
+// define ( 'MYSQL_KENNWORT',  $_ENV['MYSQL_PASSWORD'] );
 
-define ( 'MYSQL_DATENBANK', $_ENV['MYSQL_DATENBANK'] );
+// define ( 'MYSQL_DATENBANK', $_ENV['MYSQL_DATENBANK'] );
 
-define ( 'MYSQL_PORT', $_ENV['MYSQL_PORT'] );
+// define ( 'MYSQL_PORT', $_ENV['MYSQL_PORT'] );
+define ( 'MYSQL_HOST', "10.20.0.3" );
+
+define ( 'MYSQL_BENUTZER',  "LDAP_USER" );
+
+define ( 'MYSQL_KENNWORT',  "mU7XP2HF2HKgwjN" );
+
+define ( 'MYSQL_DATENBANK', "LDAP" );
+
+define ( 'MYSQL_PORT', "3306" );
+
+
 
 
 $db_link = new mysqli  (MYSQL_HOST, 

@@ -6,7 +6,7 @@ include($_SERVER['DOCUMENT_ROOT'] . '/includes/header.php');
 userLoggedin();
 if(!islehrer())
 {
-    header('Location dashboard.php');
+    header('Location: dashboard.php');
     exit;
 }
 echo'

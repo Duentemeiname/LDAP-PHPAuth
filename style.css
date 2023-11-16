@@ -264,6 +264,21 @@ nav ul li ul li a:hover{
     margin-top: 0%;
     width: 200px;
  }
+ 
+ .exportbutton
+ {
+    background-color: #104e8b;
+    border:  1px solid #a2cffe;
+    color: white;
+    padding: 5px ;
+    text-align: center;
+    display: inline-block;
+    font-size: 100%;
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 5px;
+    margin-top: 0%;
+    width: 150px;
+ }
 
  .button_redirect{
     background-color: #104e8b;

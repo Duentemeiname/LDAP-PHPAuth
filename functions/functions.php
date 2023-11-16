@@ -283,3 +283,48 @@ function externallog($username, $status)
         insertlog("Create logFile", "Log Datei konnte nicht beschrieben werden.");
     }
 }
+
+function export($result)
+{
+    if(!$result)
+    {
+        echo "<div class='fehler centerflex'>Es ist ein unbekannter Fehler bei der Suche aufgetreten.</div>" ;
+        exit;
+    }
+    else
+    {
+        $f = fopen('php://memory', 'w'); 
+        $delimiter = ","; 
+
+        $fields = array('Name', 'Benutzername', 'Nachname', 'Vorname', 'UPN-AD', 'UPN-AAD', 'PaperCut-ID'); 
+        fputcsv($f, $fields, $delimiter); 
+
+        $sizeoutarray = $result["count"];
+
+        if($sizeoutarray < 1)
+        {
+            echo "Fehler beim Export. Bitte versuchen Sie es erneut!";
+            exit;
+        }
+        
+        for($i = 0; $i < $sizeoutarray; $i++)
+        { 
+            $lineData = array(
+                $result[$i]["cn"], 
+                $result[$i]["samaccountname"], 
+                $result[$i]["sn"], 
+                $result[$i]["givenname"], 
+                $result[$i]["userprincipalname"], 
+                $result[$i]["mail"], 
+                $result[$i]["papercut"]); 
+            fputcsv($f, $lineData, $delimiter); 
+        } 
+        
+        fseek($f, 0); 
+        
+        header('Content-Type: text/csv'); 
+        header('Content-Disposition: attachment; filename="export.csv"');
+        
+        fpassthru($f); 
+    }
+}

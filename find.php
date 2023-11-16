@@ -24,7 +24,9 @@ if(!empty($upn))
         $sizearray = $result["count"];
 
         $Ausgabe .= ' 
-        <hr><div class="centerflex">
+        <hr>
+        <h2>Suchergebnisse für: '.$upn.' </h2>
+        <div class="centerflex">
         <table class="Tabelle"> 
         <tr> 
             <th>Name:</th> 
