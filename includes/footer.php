@@ -10,6 +10,6 @@
         </ul>
     </div>
     <div class="right-section">
-        <p><a href="https://github.com/Duentemeiname/LDAP-PHPAuth/releases" target="_blank">v1.2.4-beta</a></p>
+        <p><a href="https://github.com/Duentemeiname/LDAP-PHPAuth/releases" target="_blank">v1.3.0-beta</a></p>
     </div>
 </footer>

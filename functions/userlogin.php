@@ -12,6 +12,7 @@ function userlogin($username, $userpasswort)
     if(!loginallowed($username))
     {
         $echoindex["error"] = "Ungültiger Benutzername oder Passwort. <br> Bitte versuchen Sie es erneut.";
+        header("HTTP/1.1 401 Unauthorized");
         return $echoindex;
         exit;
     }
@@ -39,6 +40,7 @@ function userlogin($username, $userpasswort)
         {
             addfalsepassword($username);
             externallog($username, "false");
+            header("HTTP/1.1 401 Unauthorized");
             logloggin($username, "Login abgelehnt");
             $echoindex["error"] = "Ungültiger Benutzername oder Passwort. <br> Bitte versuchen Sie es erneut.";
 		    return $echoindex;

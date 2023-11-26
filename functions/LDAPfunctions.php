@@ -83,10 +83,10 @@ function doldapsearchnew($suchFilter, $attribute, $ldapnewBaseDn)
         return false;
     }
 }
-function returnCN($username)
+function returnCN($username) //Gibt Vorname Nachname aus und nicht den CN, da der CN im mtk.schule AD vorname.nachname lautet
 {
     $entries = getuserarray($username);
-    $CN = $entries[0]['cn'][0];
+    $CN = $entries[0]["givenname"][0]." ".$entries[0]["sn"][0];
     return $CN;
 }
 function returnfirstLetters($username)
@@ -432,4 +432,60 @@ function searchupn($upn)
         }
     }
     return($returnarray);
+}
+
+function getclassesbytutor($username)
+{
+    global $ldapOUSecurityGroupClasses;
+
+    $attribute = array("cn");
+    $filter = "(description=$username)";
+
+    $entriesclasses = doldapsearch($filter, $attribute);
+
+    $sizeclasses = $entriesclasses["count"];
+
+    for ($i = 0; $i < $sizeclasses; $i++) 
+    {
+        $classes[$i] = array(1);
+        $classes[$i]["cn"] = $entriesclasses[$i]["cn"][0];
+    }
+
+    $returnarray = array(
+        "count" => $sizeclasses
+    );
+
+    for ($i = 0; $i < $sizeclasses; $i++) 
+    {
+        $groupDn = "CN=" . $classes[$i]["cn"] . "," . $ldapOUSecurityGroupClasses;
+
+        $filter = "(&(objectClass=user)(memberOf=$groupDn))";
+        $attribute = array("samaccountname", "cn", "givenname", "sn", "mail", "userprincipalname", "employeenumber");
+
+        $entries = doldapsearch($filter, $attribute);
+
+        $sizeoutarray = $entries["count"];
+
+
+        $returnarray[$i] = array(
+            "klasse" => $classes[$i]["cn"],
+            "member" => $sizeoutarray
+        );
+
+        for ($j = 0; $j < $sizeoutarray; $j++) 
+        {
+            $returnarray[$i][$j] = array(
+                "count" => 7,
+                "cn" => isset($entries[$j]["cn"][0]) ? $entries[$j]["cn"][0] : "",
+                "samaccountname" => isset($entries[$j]["samaccountname"][0]) ? $entries[$j]["samaccountname"][0] : "",
+                "sn" => isset($entries[$j]["sn"][0]) ? $entries[$j]["sn"][0] : "",
+                "givenname" => isset($entries[$j]["givenname"][0]) ? $entries[$j]["givenname"][0] : "",
+                "userprincipalname" => isset($entries[$j]["userprincipalname"][0]) ? $entries[$j]["userprincipalname"][0] : "",
+                "mail" => empty($entries[$j]["mail"][0]) ? "N/A" : $entries[$j]["mail"][0],
+                "papercut" => empty($entries[$j]["employeenumber"][0]) ? "N/A" : $entries[$j]["employeenumber"][0]
+            );
+        }
+    }
+
+    return $returnarray;
 }

@@ -6,7 +6,7 @@ include('includes/header.php');
 userLoggedin();
 if(!islehrer())
 {
-    header('Location dashboard.php');
+    header('Location: dashboard.php');
     exit;
 }
 
@@ -34,8 +34,7 @@ if(!empty($upn))
             <th>Nachname:</th>
             <th>Vorname:</th>
             <th>UPN-Lokal:</th>
-            <th>UPN-Microsoft:</th>
-            <th>PaperCut-ID:</th>
+            <th>UPN-Microsoft:</th>s
         </tr>
         ';
 

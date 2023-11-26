@@ -7,10 +7,15 @@ if(islehrer())
     $showlehrer = '
     <li><a href="#">Lehrende</a>
         <ul>
-            <li><a href='.$GlobalServerUrl.'lehrende.php>Meine Klasse</a></li>
+            <li><a href='.$GlobalServerUrl.'meineklasse.php>Meine Klasse</a></li>
             <li><a href='.$GlobalServerUrl.'find.php>SuS-ID</a></li>
         </ul>
     </li>';
+}
+
+if(isitbeauftragter())
+{
+    $itbeauftragte = '<li><a href='.$GlobalServerUrl.'admin.php>Admin</a></li>';
 }
 
 echo'
@@ -42,6 +47,7 @@ echo'
                 <ul>
                     <li><a href='.$GlobalServerUrl.'login.php?logout=true>Logout</a></li>
                     <li><a href='.$GlobalServerUrl.'profil.php>Profil</a></li>
+                    '.$itbeauftragte.'
                 </ul>
             </li>
         ';

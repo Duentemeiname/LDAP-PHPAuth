@@ -11,6 +11,10 @@ function checkLDAPInjektion($string)
 function checkSQLInjektion($string)
 {
     global $db_link;
+    if (!preg_match('/^[a-zA-Z0-9.,!]+$/', $string)) 
+    {
+        die("Mögliche SQL-Injektion abgefangen! Bitte laden Sie diese Seite komplett neu.");
+    }
     return(mysqli_real_escape_string($db_link, $string));
 }
 function random_string() 
@@ -146,6 +150,17 @@ function getuserdevice()
     $infos_user = "Betriebssystem: ".$os." Browser: ".$browser;
     return $infos_user;
 }
+
+function checkie()
+{
+    $user_agent = $_SERVER['HTTP_USER_AGENT'];
+    if (preg_match('/MSIE/i', $user_agent) || preg_match('/Trident/i', $user_agent)) 
+    {
+        echo("Der Internet-Explorer wird von dieser Anwendung nicht mehr unterstützt. Bitte nutzen Sie einen alternativen Browser.");
+        exit;
+    }
+}
+
 function getuserip() 
 {
     if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) 
@@ -256,33 +271,114 @@ function addfalsepassword($username)
     
 }
 
-function externallog($username, $status)
+function getlockedusers()
 {
-    $logDatei = 'log.txt';
-    if (!file_exists($logDatei)) 
-    {
-        $neueLogDatei = fopen($logDatei, 'w');
+    $Anfrage = "DELETE FROM lockeduser WHERE TIMESTAMPDIFF(MINUTE, lasttry, NOW()) > 5";
+    SQLtoDB($Anfrage);
 
-        if ($neueLogDatei)  
+    $Anfrage = "SELECT * FROM lockeduser WHERE tries = 5";
+    $entries = SQLtoDB($Anfrage);
+    $rowCount = $entries->num_rows;
+
+    $returnarray = array(
+        "count" => $rowCount
+    );
+    if ($rowCount > 0) 
+    {
+    
+        while ($row = $entries->fetch_assoc()) 
         {
-            fclose($neueLogDatei);
-            insertlog("Create logFile", "Log Datei wurde erfolgreich erstellt.");
-        } else 
-        {
-            insertlog("Create logFile", "Log Datei konnte nicht erstellt werden.");
+            $returnarray[] = array(
+                "id" => $row["id"],
+                "userid" => $row["userid"],
+                "lasttry" => $row["lasttry"] 
+            );
         }
     }
-
-    if (is_writable($logDatei)) 
-    {
-        $logText = "Date:" . date('Y-m-d H:i:s') . ";IP:".getuserip().";User:".$username.";Loginstatus:".$status. PHP_EOL;
-        file_put_contents($logDatei, $logText, FILE_APPEND);
-    } 
-    else 
-    {
-        insertlog("Create logFile", "Log Datei konnte nicht beschrieben werden.");
-    }
+    return $returnarray;
 }
+function unlockuser($id)
+{
+    $id = checkSQLInjektion($id);
+    $Anfrage = "DELETE FROM lockeduser WHERE id = '" . $id . "'";
+    SQLtoDB($Anfrage);
+    header("Location: ".$_SERVER['PHP_SELF']);
+    exit();
+}
+
+function getlog($table)
+{
+    $table = checkSQLInjektion($table);
+    if (!is_int($table)) 
+    {
+        $table = 1;
+    }
+
+    $width = 30 * $table;
+    $Anfrage = "SELECT * FROM errorlog ORDER BY id DESC LIMIT $width";
+    $entries = SQLtoDB($Anfrage);
+
+    $Ausgabe = '        
+    <table class="Tabelle"> 
+    <tr> 
+        <th>Vorfall</th> 
+        <th>User</th>
+        <th>IP</th>
+        <th>Device</th>
+        <th>Datum</th>
+    </tr>';
+
+    if($entries->num_rows > 0)
+    {
+        while ($row = $entries->fetch_assoc()) 
+        {
+            $Ausgabe .= '
+            <tr>
+                <td>'.$row["vorfall"].'</td>
+                <td>'.$row["user"].'</td>
+                <td>'.$row["ip"].'</td>
+                <td>'.$row["userdevice"].'</td>
+                <td>'.$row["created_at"].'</td>
+            <tr>';
+
+        }
+    }
+    else
+    {
+        $Ausgabe .= '<td colspan="5">Keine Einträge vorhanden.</td>';
+    }
+    $Ausgabe .= '</table>';
+    return $Ausgabe;
+}
+function externallog($username, $status)
+{
+    // Wurde aus Datenschutzgründen nicht eingesetzt. Wird jetzt durch HTTP Statuscodes angezeigt.
+    // $logDatei = 'log.txt';
+    // if (!file_exists($logDatei)) 
+    // {
+    //     $neueLogDatei = fopen($logDatei, 'w');
+
+    //     if ($neueLogDatei)  
+    //     {
+    //         fclose($neueLogDatei);
+    //         insertlog("Create logFile", "Log Datei wurde erfolgreich erstellt.");
+    //     } else 
+    //     {
+    //         insertlog("Create logFile", "Log Datei konnte nicht erstellt werden.");
+    //     }
+    // }
+
+    // if (is_writable($logDatei)) 
+    // {
+    //     $logText = "Date:" . date('Y-m-d H:i:s') . ";IP:".getuserip().";User:".$username.";Loginstatus:".$status. PHP_EOL;
+    //     file_put_contents($logDatei, $logText, FILE_APPEND);
+    // } 
+    // else 
+    // {
+    //     insertlog("Create logFile", "Log Datei konnte nicht beschrieben werden.");
+    // }
+}
+
 
 function export($result)
 {
@@ -300,6 +396,53 @@ function export($result)
         fputcsv($f, $fields, $delimiter); 
 
         $sizeoutarray = $result["count"];
+
+        if($sizeoutarray < 1)
+        {
+            echo "Fehler beim Export. Bitte versuchen Sie es erneut!";
+            exit;
+        }
+        
+        for($i = 0; $i < $sizeoutarray; $i++)
+        { 
+            $lineData = array(
+                $result[$i]["cn"], 
+                $result[$i]["samaccountname"], 
+                $result[$i]["sn"], 
+                $result[$i]["givenname"], 
+                $result[$i]["userprincipalname"], 
+                $result[$i]["mail"], 
+                $result[$i]["papercut"]); 
+            fputcsv($f, $lineData, $delimiter); 
+        } 
+        
+        fseek($f, 0); 
+        
+        header('Content-Type: text/csv'); 
+        header('Content-Disposition: attachment; filename="export.csv"');
+        
+        fpassthru($f); 
+    }
+}
+
+function exportclass($result)
+{
+    if(!$result)
+    {
+        echo "<div class='fehler centerflex'>Es ist ein unbekannter Fehler bei der Suche aufgetreten.</div>" ;
+        exit;
+    }
+    else
+    {
+        $f = fopen('php://memory', 'w'); 
+        $delimiter = ","; 
+
+        $fields = array(" Exportierte Klasse: " . $result["klasse"]); 
+        fputcsv($f, $fields, $delimiter); 
+        $fields = array('Name', 'Benutzername', 'Nachname', 'Vorname', 'UPN-AD', 'UPN-AAD', 'PaperCut-ID'); 
+        fputcsv($f, $fields, $delimiter); 
+
+        $sizeoutarray = $result["member"];
 
         if($sizeoutarray < 1)
         {

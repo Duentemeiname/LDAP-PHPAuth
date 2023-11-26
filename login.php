@@ -2,7 +2,9 @@
 ob_start();
 require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/functions.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/userlogin.php');
+checkie();
 include($_SERVER['DOCUMENT_ROOT'] . '/includes/header.php');
+
 echo '
 <div class="background">
 <div class="seiteninhalt-login">';
@@ -31,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 }
 if(isset($_SESSION['userid'])) 
 {
-//echo '<meta http-equiv="refresh" content="0;url=dashboard.php">';
+    header('Location: dashboard.php');
     exit();
 }  
 else 
