@@ -73,7 +73,7 @@ Nachdem der Nutzer sein Passwort erneut 5 mal falsch eingegeben hat, wird der Nu
 <h2>Ereignisprotokoll:</h2>
 <p class="center">Sie können die Administrativen Ereignisse der letzten 30 Tage abrufen.</p>
 '.getlog($loadlog).'
-<a href="' . $GlobalServerUrl . 'admin.php?i=' . ($loadlog + 1) . '" class="exportbutton">Mehr Anzeigen</a>
+<a href="/admin.php?i=' . ($loadlog + 1) . '" class="exportbutton">Mehr Anzeigen</a>
 </div></div>
 
 

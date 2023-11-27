@@ -7,15 +7,15 @@ if(islehrer())
     $showlehrer = '
     <li><a href="#">Lehrende</a>
         <ul>
-            <li><a href='.$GlobalServerUrl.'meineklasse.php>Meine Klasse</a></li>
-            <li><a href='.$GlobalServerUrl.'find.php>SuS-ID</a></li>
+            <li><a href=/meineklasse.php>Meine Klasse</a></li>
+            <li><a href=/find.php>SuS-ID</a></li>
         </ul>
     </li>';
 }
 
 if(isitbeauftragter())
 {
-    $itbeauftragte = '<li><a href='.$GlobalServerUrl.'admin.php>Admin</a></li>';
+    $itbeauftragte = '<li><a href=/admin.php>Admin</a></li>';
 }
 
 echo'
@@ -37,7 +37,7 @@ echo'
 <ul>';
     if(basename($_SERVER['PHP_SELF']) !== 'login.php' && basename($_SERVER['PHP_SELF']) !== 'dashboard.php')
     { echo'
-        <li><a href='.$GlobalServerUrl.'dashboard.php>Zurück zum Dashboard</a></li>';
+        <li><a href=/dashboard.php>Zurück zum Dashboard</a></li>';
     }
     echo $showlehrer;
         if(!empty($_SESSION["userid"]))
@@ -45,8 +45,8 @@ echo'
             echo'
             <li><a href="#">'.returnfirstLetters($_SESSION["userid"]).'</a>
                 <ul>
-                    <li><a href='.$GlobalServerUrl.'login.php?logout=true>Logout</a></li>
-                    <li><a href='.$GlobalServerUrl.'profil.php>Profil</a></li>
+                    <li><a href=/login.php?logout=true>Logout</a></li>
+                    <li><a href=/profil.php>Profil</a></li>
                     '.$itbeauftragte.'
                 </ul>
             </li>
@@ -54,7 +54,7 @@ echo'
         }
         if($_SESSION["userid"] == "Administrator" || $_SESSION["userid"] == "administrator")
         {
-            echo '</li><li><a href='.$GlobalServerUrl.'profil.php>Profil</a></li><li><a href='.$GlobalServerUrl.'login.php?logout=true>Logout</a>';
+            echo '</li><li><a href=/profil.php>Profil</a></li><li><a href=/login.php?logout=true>Logout</a>';
         }
 echo'
 </ul>
