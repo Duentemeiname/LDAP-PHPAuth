@@ -22,7 +22,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      restart: unless-stopped
+    restart: unless-stopped
     env_file:
       - ./.envs/.mariadb
       - ./.envs/.app
