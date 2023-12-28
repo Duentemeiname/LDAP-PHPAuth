@@ -112,9 +112,9 @@ function returnfirstLetters($username)
 
 function checkifO365available($username)
 {
-    global $ldapSecurityGroupAAD;
+    global $ldapSecurityGroupSuS;
 
-    $filter = "(&(objectClass=user)(sAMAccountName=$username)(memberof=$ldapSecurityGroupAAD))";
+    $filter = "(&(objectClass=user)(sAMAccountName=$username)(memberof=$ldapSecurityGroupSuS))";
     $attribute = array("samaccountname");
     $entries = doldapsearch($filter, $attribute);
     if ($entries['count'] != 1) 
