@@ -67,7 +67,7 @@ echo'
 <h1 class="center">Zugriff auf die Klassenliste für die Klassenleitung.</h1><hr>
 <p class="center"> Ihrem Nutzerprofil konnten '.$value["count"].' Klassen zugewiesen werden.</p>
 '.$Ausgabe.'
-<p> Es werden Ihnen nicht alle Klassen angezeigt? <br> Bitte gehen Sie in KNE auf Klassen und geben Sie als Beschreibung bei Ihrer Klasse Ihren Nutzernamen ein. Alternativ Fragen Sie Ihren IT-Beauftragten.</p>
+<p> Es werden Ihnen nicht alle Klassen angezeigt? <br> Bitte gehen Sie in KNE auf Klassen und geben Sie als Beschreibung bei Ihrer Klasse Ihren Nutzernamen ein. Alternativ Fragen Sie Ihren IT-Beauftragten.<br><p>Wird Ihnen in einem Feld N/A angezeigt, wurden diese Daten noch nicht hinterlegt.<br>Bitte fragen Sie Ihren IT-Beauftragten, ob Ihre Schule diesen Dienst bereits einsetzt.</p>
 
 
 </div></div>

@@ -75,7 +75,7 @@ if (!empty($username) || !empty($vorname) || !empty($nachname))
             $Ausgabe .= '<td colspan="7">Keine Nutzer, die Ihren Angaben entsprechen, gefunden.</td>';
         }
 
-        $Ausgabe .= '</table></div>';
+        $Ausgabe .= '</table></div><p>Wird Ihnen in einem Feld N/A angezeigt, wurden diese Daten noch nicht hinterlegt.<br>Bitte wenden Sie sich bei Bedarf an das Schulteam.</p>';
     }
 }
 
@@ -137,7 +137,7 @@ if (!empty($group))
             $Ausgabe .= '<td colspan="7">Keine Nutzer, die Ihren Angaben entsprechen, gefunden.</td>';
         }
 
-        $Ausgabe .= '</table></div>';
+        $Ausgabe .= '</table></div><p>Wird Ihnen in einem Feld N/A angezeigt, wurden diese Daten noch nicht hinterlegt.<br>Bitte wenden Sie sich bei Bedarf an das Schulteam.</p>';
     }
 
 

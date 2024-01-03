@@ -10,11 +10,11 @@ if(isitbeauftragter())
     <hr>
     <h2>Weitere Infos für IT-Beauftragte: </h2><br>
     <div class="center">
-    <button class="button_redirect" onclick="window.location.href=\' itbeauftragte.php \'">Informationen zu Nutzern abrufen</button><br>
-    <button class="button_redirect" onclick="window.location.href=\'https://wiki.medienzentrum-mtk.de/\'">Wiki Medienzentrum</button>
-    <button class="button_redirect" onclick="window.location.href=\'https://helpdesk-schulen.mtk.org/helpLinePortalAmt38/de-DE\'">Ticketsystem Schulteam</button>
-    <button class="button_redirect" onclick="window.location.href=\'https://www.mtk.org/Schulteam-4328.htm\'">Kontakt zum Schulteam</button>
-    <button class="button_redirect" onclick="window.location.href=\'https://github.com/Duentemeiname/LDAP-PHPAuth/issues\'">Fragen zum Dashboard</button>
+    <button class="button_redirect" onclick="window.open(\'itbeauftragte.php\', \'_blank\')">Informationen zu Nutzern abrufen</button><br>
+    <button class="button_redirect" onclick="window.open(\'https://wiki.medienzentrum-mtk.de/\', \'_blank\')">Wiki Medienzentrum</button>
+    <button class="button_redirect" onclick="window.open(\'https://helpdesk-schulen.mtk.org/helpLinePortalAmt38/de-DE\', \'_blank\')">Ticketsystem Schulteam</button>
+    <button class="button_redirect" onclick="window.open(\'https://www.mtk.org/Schulteam-4328.htm\', \'_blank\')">Kontakt zum Schulteam</button>
+    <button class="button_redirect" onclick="window.open(\'https://github.com/Duentemeiname/LDAP-PHPAuth/issues\', \'_blank\')">Fragen zum Dashboard</button>
     </div>';
 }
 echo '
@@ -29,7 +29,7 @@ echo '
             <img src="img\o365.png" width="auto">
                 <div class="text">
                     <h2 class="colorblue header365">Office 365</h2>
-                    <p class="colorblue absatz365">Office 365 ermöglicht die effiziente Nutzung von Microsoft Office-Anwendungen lokal als auch in der Cloud.</p>
+                    <p class="colorblue absatz365">Office 365 ermöglicht Ihnen eine Nutzung auf Mobilgeräten und auf lokalen Rechnern. Die Cloud ist gesperrt.</p>
                 </div>
         </a>
     </div>
@@ -47,10 +47,10 @@ echo '
 <hr>
 <h2> Weitere hilfreiche Links: </h2><br>
 <div class="center">
-<button class="button_redirect" onclick="window.location.href=\'https://start.schulportal.hessen.de\'">Schulportal Hessen</button>
-<button class="button_redirect" onclick="window.location.href=\'https://login.microsoftonline.com\'">Login Microsoft</button>
-<button class="button_redirect" onclick="window.location.href=\'https://owa.hessen.de/\'">E-Mail-OWA</button>
-<button class="button_redirect" onclick="window.location.href=\'https://stundenplan.bwshofheim.de/daVinci-timetable.html\'">Stundenplan</button>
+<button class="button_redirect" onclick="window.open(\'https://start.schulportal.hessen.de\', \'_blank\')">Schulportal Hessen</button>
+<button class="button_redirect" onclick="window.open(\'https://login.microsoftonline.com\', \'_blank\')">Login Microsoft</button>
+<button class="button_redirect" onclick="window.open(\'https://owa.hessen.de/\', \'_blank\')">E-Mail-OWA</button>
+<button class="button_redirect" onclick="window.open(\'https://stundenplan.bwshofheim.de/daVinci-timetable.html\', \'_blank\')">Stundenplan</button>
 </div>
 
 

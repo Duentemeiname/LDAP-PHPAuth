@@ -34,7 +34,8 @@ if(!empty($upn))
             <th>Nachname:</th>
             <th>Vorname:</th>
             <th>UPN-Lokal:</th>
-            <th>UPN-Microsoft:</th>s
+            <th>UPN-Microsoft:</th>
+            <th>Papercut:</th>
         </tr>
         ';
 
@@ -57,10 +58,10 @@ if(!empty($upn))
         }   
         else
         {
-            $Ausgabe .= '<td colspan="6">Keine Nutzer, die Ihren Angaben entsprechen, gefunden.</td>';
+            $Ausgabe .= '<td colspan="7">Keine Nutzer, die Ihren Angaben entsprechen, gefunden.</td>';
         }
 
-        $Ausgabe .= '</table></div>';
+        $Ausgabe .= '</table></div><p>Wird Ihnen in einem Feld N/A angezeigt, wurden diese Daten noch nicht hinterlegt.<br>Bitte fragen Sie Ihren IT-Beauftragten, ob Ihre Schule diesen Dienst bereits einsetzt.</p>';
     }
 }
 
