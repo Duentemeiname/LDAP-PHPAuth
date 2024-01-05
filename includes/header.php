@@ -30,6 +30,7 @@ echo'
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <link rel="stylesheet" href="/style.css">
+    <link rel="icon" href="/img/favicon-96x96.png" type="image/x-icon">
 </head>
 <body>
 <nav>

@@ -10,7 +10,7 @@ if(isitbeauftragter())
     <hr>
     <h2>Weitere Infos für IT-Beauftragte: </h2><br>
     <div class="center">
-    <button class="button_redirect" onclick="window.open(\'itbeauftragte.php\', \'_blank\')">Informationen zu Nutzern abrufen</button><br>
+    <button class="button_redirect" onclick="window.location.href=\' itbeauftragte.php \'">Informationen zu Nutzern abrufen</button><br>
     <button class="button_redirect" onclick="window.open(\'https://wiki.medienzentrum-mtk.de/\', \'_blank\')">Wiki Medienzentrum</button>
     <button class="button_redirect" onclick="window.open(\'https://helpdesk-schulen.mtk.org/helpLinePortalAmt38/de-DE\', \'_blank\')">Ticketsystem Schulteam</button>
     <button class="button_redirect" onclick="window.open(\'https://www.mtk.org/Schulteam-4328.htm\', \'_blank\')">Kontakt zum Schulteam</button>
@@ -50,7 +50,6 @@ echo '
 <button class="button_redirect" onclick="window.open(\'https://start.schulportal.hessen.de\', \'_blank\')">Schulportal Hessen</button>
 <button class="button_redirect" onclick="window.open(\'https://login.microsoftonline.com\', \'_blank\')">Login Microsoft</button>
 <button class="button_redirect" onclick="window.open(\'https://owa.hessen.de/\', \'_blank\')">E-Mail-OWA</button>
-<button class="button_redirect" onclick="window.open(\'https://stundenplan.bwshofheim.de/daVinci-timetable.html\', \'_blank\')">Stundenplan</button>
 </div>
 
 

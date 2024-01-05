@@ -56,9 +56,7 @@ function showlogin()
     <button class="status_button" type="submit">Anmelden!</button>
     </form>
     <p> Anmelden an: '.$ldapDomainName.' </p>
-    <p> Sollten Sie Probleme beim Login haben, <br> wenden Sie sich an den IT-Beauftragten Ihrer Schule.<p>
-    <h2> Bitte beachten Sie, dass es sich um eine Beta handelt, in der Fehler auftreten können! <br>
-    Bitte melden Sie diese Fehler über "Fehler melden". </h2>';
+    <p> Sollten Sie Probleme beim Login haben, <br> wenden Sie sich an den IT-Beauftragten Ihrer Schule.<p>';
     
 }
 
