@@ -21,7 +21,7 @@ if(checkifO365available($_SESSION["userid"]))
 }
 else
 {
-    echo "<div class='centerflex'><div class='fehler'> Entweder Sie haben keine Berechtigung Office365 zu verwenden, oder Ihr Profil wurde noch nicht synchronisiert. Bitte versuchen Sie es in 2 Stunden erneut oder wenden Sie sich an Ihren IT-Beauftragten. </div></div><br>" ;
+    echo "<div class='centerflex'><div class='fehler'> Entweder Sie haben keine Berechtigung Office365 zu verwenden, oder Ihr Profil wurde noch nicht synchronisiert. Abhängig von Ihrer Schule steht diese Funktion nur SuS zu Verfügung. Wenden Sie sich bei Fragen bitte an den IT-Beauftragten.<br> Fehlercode: email-is-empty</div></div><br>" ;
 }
 echo "</div></div>";
 include($_SERVER['DOCUMENT_ROOT'] . '/includes/footer.php');
