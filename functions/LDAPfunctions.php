@@ -112,16 +112,6 @@ function returnfirstLetters($username)
 
 function checkifO365available($username)
 {
-    global $ldapSecurityGroupSuS;
-
-    $filter = "(&(objectClass=user)(sAMAccountName=$username)(memberof=$ldapSecurityGroupSuS))";
-    $attribute = array("samaccountname");
-    $entries = doldapsearch($filter, $attribute);
-    if ($entries['count'] != 1) 
-    {
-        return false;
-    } 
-
     $entries = getuserarray($username);
     $email = $entries[0]['mail'][0];
     if(empty($email))
@@ -488,4 +478,17 @@ function getclassesbytutor($username)
     }
 
     return $returnarray;
+}
+
+function checkifpapercutavailable($username)
+{
+    $papercutid = getpapercutid($username);
+    if(empty($papercutid))
+    {
+        return false;
+    }
+    else
+    {
+        return $papercutid;
+    }
 }
