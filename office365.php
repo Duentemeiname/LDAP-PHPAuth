@@ -16,7 +16,7 @@ if(checkifO365available($_SESSION["userid"]))
 <p><b>' . returnEmail($_SESSION["userid"]) . '</b></p>
 <p>Dieser Nutzername ist Ihre Authentifizierung bei Microsoft, damit Ihnen über die Schule kostenlos Office für Mobilgeräte und lokale Rechner zur Verfügung gestellt werden kann. Zukünftig wird dieser Nutzer auch bei weiteren Diensten eingesetzt. <br> Ihr Passwort bei Microsoft entspricht dem, welches Sie sich auch im Schulnetzwerk gegeben haben. Dieses Passwort können Sie nur im Schulnetzwerk ändern. Sollten Sie es vergessen, wenden Sie sich bitte an Ihren IT-Beauftragten.</p>
 <button class="button_redirect" onclick="window.open(\'' . $AADLoginLink . returnEmail($_SESSION["userid"]) . '\', \'_blank\')">Hier geht es direkt zu Office365.</button>
-<button class="button_redirect" onclick="window.location.href=\'' . $AADLoginLink . returnEmail($_SESSION["userid"]) . '\'">Wie funktioniert der Login bei Microsoft?</button>
+<button class="button_redirect" onclick="window.open(\'https://wiki.medienzentrum-mtk.de/anleitungen\', \'_blank\')">Wie funktioniert der Login bei Microsoft?</button>
 </div>';
 }
 else
