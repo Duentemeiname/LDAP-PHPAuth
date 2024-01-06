@@ -193,6 +193,13 @@ function insertlog($typ, $action)
     SQLtoDB($Anfrage);
 }
 
+function insertloguserdata($typ, $action, $username)
+{
+    $Anfrage = "INSERT INTO errorlog(typ, ip, vorfall, user, userdevice) 
+      VALUES ('".$typ."', '" . getuserip() . "', '" . $action . "', '" . $username . "', '" . getuserdevice() . "')";
+    SQLtoDB($Anfrage);
+}
+
 function checkuserlocked($username)
 {
     $username = checkSQLInjektion($username);
@@ -308,11 +315,8 @@ function unlockuser($id)
 
 function getlog($table)
 {
-    $table = checkSQLInjektion($table);
-    if (!is_int((int)$table)) 
-    {
-        $table = 1;
-    }
+
+    (int)$table = checkSQLInjektion($table);
 
     $width = 30 * $table;
     $Anfrage = "SELECT * FROM errorlog ORDER BY id DESC LIMIT $width";
