@@ -309,7 +309,7 @@ function unlockuser($id)
 function getlog($table)
 {
     $table = checkSQLInjektion($table);
-    if (!is_int($table)) 
+    if (!is_int((int)$table)) 
     {
         $table = 1;
     }
