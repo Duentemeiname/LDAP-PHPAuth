@@ -12,11 +12,15 @@ if(!isitbeauftragter())
 $unlockuserid = $_GET["unlock"];
 $loadlog = $_GET ["i"];
 
-if(!is_int($loadlog) || empty($loadlog)) 
-{
+if((int)$loadlog == 0)
     $loadlog = 1;
-}
 
+if((int)$unlockuserid == 0 && !empty($unlockuserid))
+{
+    insertloguserdata("software", "User send wrong data to admin.php <br> (unlock user) Expected int but got none ", $_SESSION["userid"]);
+    echo "Fehler bei der Datenübertragung! Fehlermeldung: (unlock user) Expected int but got none ";    
+    exit;
+}
 
 $currentURL = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
@@ -74,7 +78,7 @@ Nachdem der Nutzer sein Passwort erneut 5 mal falsch eingegeben hat, wird der Nu
 <h2>Ereignisprotokoll:</h2>
 <p class="center">Sie können die Administrativen Ereignisse der letzten 30 Tage abrufen.</p>
 '.getlog($loadlog).'
-<a href="/admin.php?i=' . ($loadlog + 1) . '" class="exportbutton">Mehr Anzeigen</a>
+<a href="/admin.php?i=' . ($loadlog + 1) . '" class="exportbutton">Mehr Anzeigen</a> <a> Aktuelle Seite: '.$loadlog.' </a>
 </div></div>
 
 
