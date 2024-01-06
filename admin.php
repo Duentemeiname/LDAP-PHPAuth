@@ -12,10 +12,11 @@ if(!isitbeauftragter())
 $unlockuserid = $_GET["unlock"];
 $loadlog = $_GET ["i"];
 
-if(empty($loadlog))
+if(!is_int($loadlog) || empty($loadlog)) 
 {
     $loadlog = 1;
 }
+
 
 $currentURL = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
