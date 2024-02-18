@@ -23,11 +23,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $username = checkLDAPInjektion($_POST["nutzername"]);
     $passwort = checkLDAPInjektion($_POST["passwort"]);
 
-    $ergebnis = userlogin($username, $passwort);
-    $fehler = $ergebnis['error'];
-    if(!empty($fehler))
+    if(empty($username) || empty($passwort))
     {
-        echo "<div class='centerflex'><div class='fehler'> $fehler </div></div>" ;
+        echo "<div class='centerflex'><div class='fehler'> Ungültiger Benutzername oder Passwort. <br> Bitte versuchen Sie es erneut.</div></div>";
+    }
+    else
+    {
+        $ergebnis = userlogin($username, $passwort);
+        $fehler = $ergebnis['error'];
+        if(!empty($fehler))
+        {
+            echo "<div class='centerflex'><div class='fehler'> $fehler </div></div>" ;
+        }
     }
 
 }
