@@ -1,0 +1,3 @@
+**/data-mariadb/
+docker-compose.yml
+**/.envs/
