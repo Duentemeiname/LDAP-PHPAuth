@@ -33,6 +33,6 @@ services:
       - dashboard-db
     labels:
       - traefik.enable=true
-      - traefik.http.routers.cloud.rule=Host(`dashboard.bws.mtk.schule`)
+      - traefik.http.routers.cloud.rule=Host(`<URL>`)
       - traefik.http.routers.cloud.tls=true
       - traefik.port=80
