@@ -6,7 +6,7 @@ ldapPort=
 ldapDomainName=
 ldapBaseDn=
 ldaps=
-test
+
 # LDAP Paths which are needed
 
 ldapSecurityGroupDomainenAdmin=

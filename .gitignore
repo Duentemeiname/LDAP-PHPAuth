@@ -2,3 +2,5 @@
 /.envs/
 /.envs/.mariadb
 /.envs/.app
+.mariadb
+.app
