@@ -88,10 +88,10 @@ Falls Probleme auftreten:
     ```
 
 - Stellen Sie sicher, dass alle Konfigurationsdateien korrekt sind und dass alle notwendigen Ports geöffnet und nicht von anderen Diensten blockiert sind.
-
+- Aktivieren Sie PHP display_errors in dem Sie in der Datei /dockerfiles/app/Dockerfile die Zeile RUN echo "display_errors = Off" > /usr/local/etc/php/php.ini löschen.
 ## Lizenz
 
-Dieses Projekt ist unter der Creative Commons Namensnennung - Nicht kommerziell - Keine Bearbeitungen 4.0 International Lizenz lizenziert – siehe die [LICENSE](LICENSE) Datei für Details.
+Dieses Projekt ist unter der Creative Commons Namensnennung MIT License lizenziert – siehe die [LICENSE](LICENSE) Datei für Details.
 
 ---
 
