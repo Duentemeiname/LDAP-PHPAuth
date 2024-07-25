@@ -1,2 +1,4 @@
 **/data-mariadb/
-.envs/
+/.envs/
+/.envs/.mariadb
+/.envs/.app

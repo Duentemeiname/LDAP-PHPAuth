@@ -4,12 +4,12 @@ echo "Dieses Script vereinheitlicht die Bereitstellung des Schuldashboards. Es f
 Die Konfiguration von Traefik muss vor dem Ausführen dieses Scripts in der docker-compose.yml angepasst werden."
 
 echo "Datenbankkonfiguration:"
-read -p "Der default Host für die Datenbank ist ldap-app-db, möchten Sie diesen ändern? (y/n) " choosehost
+read -p "Der default Host für die Datenbank ist ldap-phpauth-dashboard-db-1, möchten Sie diesen ändern? (y/n) " choosehost
 
 if [ "$choosehost" == "y" ]; then
     read -p "Bitte geben Sie den Host für die Datenbank ein: " dbhost
 elif [ "$choosehost" == "n" ]; then
-    dbhost="ldap-app-db"
+    dbhost="ldap-phpauth-dashboard-db-1"
 else 
     echo "Ungültige Eingabe"
     exit 1
@@ -55,35 +55,28 @@ else
     exit 1
 fi
 
+echo "Bitte stellen Sie sicher, wenn Sie LDAP-Pfade eingeben, diese immer mit Anführungszeichen eingeben. (Bsp: 'OU=Benutzer,OU=schule,')"
 read -p "Bitte geben Sie den LDAP-Nutzernamen ein: (Bsp: Administrator) " ldapNutzername
 read -p "Bitte geben Sie das LDAP-Passwort ein: " ldapPasswort
 read -p "Bitte geben Sie den LDAP-Server ein: (Bsp: s1001.local.duentetech.de) " ldapServer
 read -p "Bitte geben Sie den LDAP-Port ein: (Bsp: 389) " ldapPort
-read -p "Bitte geben Sie den LDAP-Domainnamen ein: (Bsp: HOME)" ldapDomainName
-read -p "Bitte geben Sie den LDAP-Base DN ein: (Bsp: DC=local,DC=duentetech,DC=de)" ldapBaseDn
+read -p "Bitte geben Sie den LDAP-Domainnamen ein: (Bsp: HOME) " ldapDomainName
+read -p "Bitte geben Sie den LDAP-Base DN ein: (Bsp: \"DC=local,DC=duentetech,DC=de\") " ldapBaseDn
 
-echo "Bitte prüfen Sie, ob die angegebenen LDAP-Pfade korrekt sind. Bitte beachten Sie, dass die Base DN nicht mit eingegeben wird, da diese aus der vorherigen eingabe übernommen wird. Am Ende jeder Eingabe muss ein Komma gesetzt werden"
+echo "Bitte prüfen Sie, ob die angegebenen LDAP-Pfade korrekt sind. Bitte beachten Sie, dass die Base DN nicht mit eingegeben wird, da diese aus der vorherigen Eingabe übernommen wird. Am Ende jeder Eingabe muss ein Komma gesetzt werden und die Pfade müssen mit Anführungszeichen eingegeben werden."
 
-ldapSecurityGroupDomainenAdmin = "CN=Domänen-Admins,CN=Users,"
-ldapSecurityGroupITBeauftragte = "CN=IT-Beauftragte,OU=Rollen,OU=Gruppen,"
-ldapSecurityGroupLehrer        = "CN=Alle Lehrer,OU=Benutzer,OU=schule,"
-ldapSecurityGroupSuS           = "CN=Alle Schüler,OU=Benutzer,OU=schule,"
-ldapOUSecurityGroupClasses     = "OU=Klassen,OU=Gruppen,OU=schule,"
-ldapUserLoginAllowed           = "OU=Benutzer,OU=schule,"
+ldapSecurityGroupDomainenAdmin="\"CN=Domänen-Admins,CN=Users,\""
+ldapSecurityGroupITBeauftragte="\"CN=IT-Beauftragte,OU=Rollen,OU=Gruppen,\""
+ldapSecurityGroupLehrer="\"CN=Alle Lehrer,OU=Benutzer,OU=schule,\""
+ldapSecurityGroupSuS="\"CN=Alle Schüler,OU=Benutzer,OU=schule,\""
+ldapOUSecurityGroupClasses="\"OU=Klassen,OU=Gruppen,OU=schule,\""
+ldapUserLoginAllowed="\"OU=Benutzer,OU=schule,\""
 
-ensure_trailing_comma() {
-    input=$1
-    if [[ $input != *, ]]; then
-        input="${input},"
-        echo "Ein Komma wurde hinzugefügt."
-    fi
-    echo $input
-}
 
 read -p "Der default Pfad für die Domänen Admins ist $ldapSecurityGroupDomainenAdmin, möchten Sie diesen ändern? (y/n) " choosepath
 if [ "$choosepath" == "y" ]; then
     read -p "Bitte geben Sie den Pfad für die Domänen Admins ein: " input
-    ldapSecurityGroupDomainenAdmin=$(ensure_trailing_comma "$input")
+    ldapSecurityGroupDomainenAdmin=$input
 elif [ "$choosepath" == "n" ]; then
     :
 else 
@@ -94,7 +87,7 @@ fi
 read -p "Der default Pfad für die IT-Beauftragten ist $ldapSecurityGroupITBeauftragte, möchten Sie diesen ändern? (y/n) " choosepath
 if [ "$choosepath" == "y" ]; then
     read -p "Bitte geben Sie den Pfad für die IT-Beauftragten ein: " input
-    ldapSecurityGroupITBeauftragte=$(ensure_trailing_comma "$input")
+    ldapSecurityGroupITBeauftragte=$input
 elif [ "$choosepath" == "n" ]; then
     :
 else 
@@ -105,7 +98,7 @@ fi
 read -p "Der default Pfad für die Lehrer ist $ldapSecurityGroupLehrer, möchten Sie diesen ändern? (y/n) " choosepath
 if [ "$choosepath" == "y" ]; then
     read -p "Bitte geben Sie den Pfad für die Lehrer ein: " input
-    ldapSecurityGroupLehrer=$(ensure_trailing_comma "$input")
+    ldapSecurityGroupLehrer=$input
 elif [ "$choosepath" == "n" ]; then
     :
 else 
@@ -116,7 +109,7 @@ fi
 read -p "Der default Pfad für die Schüler ist $ldapSecurityGroupSuS, möchten Sie diesen ändern? (y/n) " choosepath
 if [ "$choosepath" == "y" ]; then
     read -p "Bitte geben Sie den Pfad für die Schüler ein: " input
-    ldapSecurityGroupSuS=$(ensure_trailing_comma "$input")
+    ldapSecurityGroupSuS=$input
 elif [ "$choosepath" == "n" ]; then
     :
 else 
@@ -127,7 +120,7 @@ fi
 read -p "Der default Pfad für die Klassen ist $ldapOUSecurityGroupClasses, möchten Sie diesen ändern? (y/n) " choosepath    
 if [ "$choosepath" == "y" ]; then
     read -p "Bitte geben Sie den Pfad für die Klassen ein: " input
-    ldapOUSecurityGroupClasses=$(ensure_trailing_comma "$input")
+    ldapOUSecurityGroupClasses=$input
 elif [ "$choosepath" == "n" ]; then
     :
 else 
@@ -138,7 +131,7 @@ fi
 read -p "Der default Pfad für die Benutzer ist $ldapUserLoginAllowed, möchten Sie diesen ändern? (y/n) " choosepath
 if [ "$choosepath" == "y" ]; then
     read -p "Bitte geben Sie den Pfad für die Benutzer ein: " input
-    ldapUserLoginAllowed=$(ensure_trailing_comma "$input")
+    ldapUserLoginAllowed=$input
 elif [ "$choosepath" == "n" ]; then
     :
 else 
@@ -146,6 +139,14 @@ else
     exit 1
 fi
 
+# Ausgabe der neuen Werte zur Überprüfung
+echo "Neue Werte:"
+echo "ldapSecurityGroupDomainenAdmin=$ldapSecurityGroupDomainenAdmin"
+echo "ldapSecurityGroupITBeauftragte=\"$ldapSecurityGroupITBeauftragte"
+echo "ldapSecurityGroupLehrer=$ldapSecurityGroupLehrer"
+echo "ldapSecurityGroupSuS=$ldapSecurityGroupSuS"
+echo "ldapOUSecurityGroupClasses=\"$ldapOUSecurityGroupClasses"
+echo "ldapUserLoginAllowed=$ldapUserLoginAllowed"
 
 # Werte in die .envs/.mariadb Datei schreiben
 echo "MARIADB_ROOT_PASSWORD=$dbrootpassword" > .envs/.mariadb
@@ -194,9 +195,16 @@ echo "ldapSecurityGroupSuS=$ldapSecurityGroupSuS"
 echo "ldapOUSecurityGroupClasses=$ldapOUSecurityGroupClasses"
 echo "ldapUserLoginAllowed=$ldapUserLoginAllowed"
 
-echo "Die folgenden PFade wurden in .envs/.app gesetzt:"
+echo "Prüfe auf alte Datenbank Dateien"
+if [ -d "data-mariadb" ]; then
+    sudo rm -rf "data-mariadb"
+    echo "Das Verzeichnis 'data-mariadb' wurde gelöscht."
+else
+    echo "Das Verzeichnis 'data-mariadb' existiert nicht."
+fi
+
 # Abschlussnachricht ausgeben
-echo "Setup abgeschlossen. Die Umgebungsvariablen wurden erfolgreich gesetzt."
+echo "Setup abgeschlossen. Die Umgebungsvariablen wurden erfolgreich gesetzt. Der Docker wird nun gebaut!"
 
 # Docker Compose ausführen, um den Container zu starten
-docker-compose up -d
+sudo docker compose up --build --force-recreate -d
