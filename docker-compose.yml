@@ -1,38 +1,35 @@
-version: "3"
-
 networks:
   web:
-    external: true
+    external: false
   dashboard:
     external: false
 
 services:
   dashboard-db:
-    image: mariadb:11
+    build:
+      context: ./dockerfiles/db
+      dockerfile: Dockerfile
     restart: unless-stopped
     volumes:
       - ./data-mariadb:/var/lib/mysql:Z
     env_file:
       - ./.envs/.mariadb
+
     networks:
       - dashboard
-    labels:
-      - traefik.enable=false
+
   dashboard-app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: dockerfiles/app/Dockerfile
     restart: unless-stopped
     env_file:
-      - ./.envs/.mariadb
       - ./.envs/.app
+      - ./.envs/.mariadb
     networks:
       - dashboard
       - web
     depends_on:
       - dashboard-db
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.cloud.rule=Host(`<URL>`)
-      - traefik.http.routers.cloud.tls=true
-      - traefik.port=80
+    ports:
+      - "8002:80"

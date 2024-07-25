@@ -1,6 +1,7 @@
 <?php
 ob_start();
-require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/functions.php');
+echo "index.php was loaded successfully, it should be redirected immediately...";
+require_once('functions/functions.php');
 checkie();
 if(userLoggedin())
 {

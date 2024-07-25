@@ -1,8 +1,8 @@
 <?php
 ob_start();
-require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/functions.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/LDAPfunctions.php');
-include($_SERVER['DOCUMENT_ROOT'] . '/includes/header.php');
+require_once('functions/functions.php');
+require_once('functions/LDAPfunctions.php');
+include('includes/header.php');
 userLoggedin();
 echo '
 <div class="background">

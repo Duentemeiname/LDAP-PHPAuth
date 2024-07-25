@@ -1,7 +1,7 @@
 <?php
 ob_start();
-require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/functions.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/connect.php');
+require_once('functions/functions.php');
+require_once('functions/connect.php');
 include($_SERVER['DOCUMENT_ROOT'] . '/includes/header.php');
 userLoggedin();
 if(isitbeauftragter())

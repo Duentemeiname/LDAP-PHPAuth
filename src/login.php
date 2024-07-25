@@ -1,7 +1,7 @@
 <?php
 ob_start();
-require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/functions.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/userlogin.php');
+require_once('functions/functions.php');
+require_once('functions/userlogin.php');
 checkie();
 include($_SERVER['DOCUMENT_ROOT'] . '/includes/header.php');
 

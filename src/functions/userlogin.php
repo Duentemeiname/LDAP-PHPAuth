@@ -1,7 +1,7 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/connect.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/functions.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/functions/LDAPfunctions.php');
+require_once('connect.php');
+require_once('functions.php');
+require_once('LDAPfunctions.php');
 
 function userlogin($username, $userpasswort)
 {

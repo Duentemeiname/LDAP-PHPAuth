@@ -4,4 +4,3 @@ ldapServer=
 ldapPort=
 ldapDomainName=
 ldapBaseDn=
-
