@@ -3,6 +3,43 @@
 echo "Dieses Script vereinheitlicht die Bereitstellung des Schuldashboards. Es fragt alle nötigen Daten ab und baut das Schuldashboard als Docker.
 Die Konfiguration von Traefik muss vor dem Ausführen dieses Scripts in der docker-compose.yml angepasst werden."
 
+echo "Erstelle Umgebungsvariablen"
+mkdir -p .envs
+
+# Datei .app mit dem gewünschten Inhalt erstellen
+cat <<EOL > .envs/.app
+# Dieses File wird automatisch durch das Setupscript erstellt
+
+# Information about the Domaine
+ldapNutzername=
+ldapPasswort=
+ldapServer=
+ldapPort=
+ldapDomainName=
+ldapBaseDn=
+ldaps=
+
+# LDAP Paths which are needed
+ldapSecurityGroupDomainenAdmin=
+ldapSecurityGroupITBeauftragte=
+ldapSecurityGroupLehrer=
+ldapSecurityGroupSuS=
+ldapOUSecurityGroupClasses=
+ldapUserLoginAllowed=
+EOL
+
+# Datei .mariadb mit dem gewünschten Inhalt erstellen
+cat <<EOL > .envs/.mariadb
+MARIADB_ROOT_PASSWORD=
+MARIADB_DATABASE=
+MARIADB_USER=
+MARIADB_PASSWORD=
+MYSQL_HOST=
+MYSQL_PORT=
+EOL
+
+echo "Der Ordner .envs und die Dateien .app und .mariadb wurden erfolgreich erstellt."
+
 echo "Datenbankkonfiguration:"
 read -p "Der default Host für die Datenbank ist ldap-phpauth-dashboard-db-1, möchten Sie diesen ändern? (y/n) " choosehost
 

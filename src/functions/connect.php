@@ -20,7 +20,7 @@ $ldapNutzer = $DownLevelLogonName.$ldapNutzername;
 
     if ($ldapConn) 
     {
-        if($LDAPS)
+        if($LDAPS === true)
         {
             if(!ldap_start_tls($ldapConn))
             {
