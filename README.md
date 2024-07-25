@@ -33,6 +33,7 @@ Dieses Repository enthält alle notwendigen Dateien und Skripte zur Bereitstellu
     - LDAP-Konfiguration
 
     **Hinweis:** Während des Setups werden Sie aufgefordert, verschiedene Eingaben zu machen, wie z.B. Datenbank- und LDAP-Informationen. 
+    Der Eingegebene LDAP-Nutzer benötigt Leserechte auf das gesamte Userverzeichnis. 
 
 3. **Überprüfung der Konfiguration:**
 
