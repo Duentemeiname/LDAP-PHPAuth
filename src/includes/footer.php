@@ -6,7 +6,7 @@
             <li><a href="https://github.com/Duentemeiname/LDAP-PHPAuth/issues/2" target="_blank">Fehler melden</a></li>
             <li><a href="https://github.com/Duentemeiname/LDAP-PHPAuth/issues/1" target="_blank">Feedback</a></li>
             <li><a href="https://www.mtk.org/Schulteam-4328.htm" target="_blank">Kontakt</a></li>
-            <li><a href="https://wiki.medienzentrum-mtk.de" target="_blank">Dokumentation</a></li>
+            <li><a href="https://docs.duentetech.de/de/Schuldashboard/home" target="_blank">Dokumentation</a></li>
         </ul>
     </div>
     <div class="right-section">
