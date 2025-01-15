@@ -14,7 +14,7 @@ $nachname = checkLDAPInjektion($_GET["nachname"]);
 $group = checkLDAPInjektion($_GET["group"]);
 $export = $_GET["export"];
 
-$currentURL = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$currentURL = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 $kurzel_select = getsecuritygroups();
 
