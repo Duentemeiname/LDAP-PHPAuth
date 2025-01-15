@@ -21,7 +21,7 @@ services:
   dashboard-app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile:  dockerfiles/app/Dockerfile
     restart: unless-stopped
     env_file:
       - ./.envs/.mariadb
