@@ -10,6 +10,6 @@
         </ul>
     </div>
     <div class="right-section">
-        <p><a href="https://github.com/Duentemeiname/LDAP-PHPAuth/releases" target="_blank">v1.3.3 </a> </p> <a href="https://php.net" target="_blank"><img src="img/php82-logo.webp" height="23px" alt="PHP 8.2 Logo"></a>
+        <p><a href="https://github.com/Duentemeiname/LDAP-PHPAuth/releases" target="_blank">v1.3.4 </a> </p> <a href="https://php.net" target="_blank"><img src="img/php82-logo.webp" height="23px" alt="PHP 8.2 Logo"></a>
     </div>
 </footer>
