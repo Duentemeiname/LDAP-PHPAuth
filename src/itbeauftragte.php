@@ -14,7 +14,7 @@ $nachname = checkLDAPInjektion($_GET["nachname"]);
 $group = checkLDAPInjektion($_GET["group"]);
 $export = $_GET["export"];
 
-$currentURL = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$currentURL = "https://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 $kurzel_select = getsecuritygroups();
 
@@ -38,7 +38,7 @@ if (!empty($username) || !empty($vorname) || !empty($nachname))
         $sizearray = $result["count"];
         $Ausgabe .= ' 
         <h2>Suchergebnis für: '.$username.' '.$vorname.' '.$nachname.'  </h2>
-        <a href="https://' . $currentURL . '&export=true" class="exportbutton">Exportieren</a>
+        <a href="' . $currentURL . '&export=true" class="exportbutton">Exportieren</a>
         <div class="centerflex">
         <table class="Tabelle"> 
             <tr> 
@@ -101,7 +101,7 @@ if (!empty($group))
 
         $Ausgabe .= ' 
         <h2>Mitglieder der Gruppe: '.$group.' </h2>
-        <a href="https://' . $currentURL . '&export=true" class="exportbutton">Exportieren</a>
+        <a href="' . $currentURL . '&export=true" class="exportbutton">Exportieren</a>
         <div class="centerflex">
         <table class="Tabelle"> 
         <tr> 
